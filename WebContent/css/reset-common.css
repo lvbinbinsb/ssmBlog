@@ -1,0 +1,148 @@
+@charset "utf-8";
+.fl{float: left;}
+.fr{float: right;}
+.cl{clear: both;}
+
+.tl{text-align: left;}
+.tr{text-align: right;}
+.tc{text-align: center;}
+
+
+.lg_page{
+	margin-bottom: 100px;
+}
+
+.page-header{
+	margin:0px 0px ;
+	padding:0px 0px;
+}
+
+.lg_header_h1 , .lg_search_div{
+	margin:20px 0px ;
+	padding:0px 0px;
+}
+
+.nav-pills>li.active>a {
+    color: #fff;
+    background-color: #ff6600;
+}
+
+
+.lg_footer{
+	position: relative;
+}
+.lg_panel-default{
+	width: 100%;
+	border-color: #FFFFFF;
+	text-align: center;
+	margin: 0px 0px;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+}
+
+
+.lg_list-group .active{
+	background-color: #ff6600;
+    border-color: #ff6600;
+    color: #FFFFFF;
+}
+
+.list-group-item.active:focus, .list-group-item.active:hover{
+	background: #dedede;
+	 border-color: #ff6600;
+    color: #333333; 
+}
+
+.lg_hot_list .row{
+	margin: 0px 0px;
+}
+.lg_hot_list .row .col-lg-3{
+	padding: 0px 0px;
+}
+.lg_hot_list .row .col-lg-9{
+	overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.lg_hot_list ul li{
+	margin: 1px auto;
+}
+.lg_hot_list ul li:hover{
+	cursor: pointer;
+	text-decoration: underline;
+	background: #DEDEDE;
+	font-weight: bold;
+}
+.lg_hot_list .label{
+	/*float: right;*/
+}
+
+.lg_category{
+	
+}
+.lg_category a{
+	border:none
+}
+.lg_category a:hover{
+	text-decoration: underline;
+	background: #DEDEDE;
+	font-weight: bold;
+	color: #FF6600;
+}
+
+
+.lg_comment{
+	
+}
+.lg_comment .media{
+	
+}
+.lg_comment .media:hover{
+	background: #DEDEDE;
+}
+
+
+.lg_blog_items{}
+.lg_blog_items .media{
+	border: 1px solid #d3d3d3;padding: 10px 10px;margin-top: 10px;
+}
+.lg_blog_items .media:hover{
+	background: #e1e1e1;
+	cursor:pointer;
+	border-style: dashed;
+	border-color: #FF6600;
+}
+.lg_blog_items h4{
+	font-weight: bold;
+}
+
+.lg_blog_detail_content{
+	padding: 10px 20px;
+}
+
+.lg_blog_detail_content_page .pager a{
+	color: #FF6600;
+}
+.lg_blog_detail_content_page .pager a:hover{
+	font-weight:bold;
+}
+
+
+
+
+
+
+
+#goTopBtn {
+	position: fixed;
+	line-height: 36px;
+	width: 36px;
+	bottom: 35px;
+	height: 36px;
+	cursor: pointer;
+	display: none;
+	background: url(../img/back_to_top_white.gif);
+}
+
+a:hover{
+cursor:pointer;
+}

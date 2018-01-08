@@ -1,0 +1,95 @@
+IT技术博客系统
+
+B/S前后端分离
+	前端页面使用html(jQuery发送ajax 获取json数据   模板引擎handlebars) 渲染到html页面
+	后面接口开放API  controller中的方法给前端页面中的ajax提供json数据
+	
+	
+	数据表设计
+		全站参数配置表
+				
+		
+		一级分类表Category1
+			ID编号 
+			name分类名称
+				
+		
+		二级分类表Category2
+			ID编号
+			name分类名称
+			pid上级分类ID
+		
+		三级分类表Category3
+			ID编号
+			name分类名称
+			pid上级分类ID
+		
+		
+		博客标签表
+			ID编号
+			name标签名称
+			
+		博客信息-标签表
+			博客Id
+			标签Id
+		
+			
+		博客信息表BlogInfo
+			ID编号
+			authorId作者ID
+			authorName作者名称
+			title博客标题
+			content内容
+			createTime发布时间	
+			categoryId博客分类ID
+			(额外字段List<Tag>)
+			
+		阅读信息表
+			ID编号主键自增
+			blogId博客ID
+			visitorIp访问者IP
+			visitorName访问者ID
+			visitTime访问时间
+		用户信息表
+			ID主键自增
+			phone手机号
+			visitTime访问时间
+			visitIp
+		
+		点赞信息表
+			ID主键自增
+			blogId博客ID
+			forkIP点赞者IP
+			forkID点赞者ID
+			forkTime点赞时间
+		收藏信息表
+			ID主键自增
+			userId用户ID
+			bloblist收藏博客ID以,分割
+		评论信息表
+			ID主键自增
+			askerId发问者ID
+			answerId回答者ID
+			content内容
+			askTime发问时间
+			answerTime回答时间
+		管理员信息表
+			ID管理员ID
+			phone管理员手机号
+			password管理员密码
+			
+		点赞信息表
+		评论信息表
+			张三：文章写的不错
+				回复：谢谢，我会继续努力的
+			张三：其实我是骗你的
+				回复：好吧，算你狠
+		管理员信息表	
+			
+			
+			
+			
+			
+		
+		
+	

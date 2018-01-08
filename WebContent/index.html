@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<script id="global_htitle-template" type="text/x-handlebars-template">
+	{{globalHtitle}}	
+</script>
+<link rel="shortcut icon" href="favicon.ico" />
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+	      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="css/reset-common.css" />
+<style type="text/css">
+body {
+	font: "宋体", Arial, Helvetica, sans-serif;
+	background: url(img/bg.jpg) repeat
+}
+</style>
+</head>
+<body>
+	<title id="global_htitle-area"></title>
+	<div class="lg_page">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="page-header">
+						<script id="global_htitle2-template"
+							type="text/x-handlebars-template">
+						<h1 class="lg_header_h1">
+							{{globalHtitle}}
+						</h1>
+						</script>
+					</div>
+				</div>
+				<!-- /.col-lg-6 -->
+				<div class="col-lg-3">
+					<div class="input-group lg_search_div">
+						<input type="text" class="form-control searchKeyWords"
+							placeholder="Search for..."> <span
+							class="input-group-btn">
+							<button class="btn btn-default" type="button" id="searchBtn">Go!</button>
+						</span>
+					</div>
+					<!-- /input-group -->
+				</div>
+				<!-- /.col-lg-6 -->
+			</div>
+			<!-- /.row -->
+		</div>
+
+
+		<div class="container" style="margin: 20px auto;">
+			<div class="row">
+				<div class="col-lg-12">
+					<ul class="nav nav-pills">
+						<script id="category_nav-template"
+							type="text/x-handlebars-template">
+							{{#each this}}
+								{{#if categorynavName}}
+									{{#testEqual categorynavName "HOME"}}
+										 <li role="presentation"  class="active"><a indexNav={{@index}} href="#" class="categorynavNameClass" categorynavName_id={{categorynavId}}><b>HOME</b></a></li>
+									{{else}}
+										<li role="presentation"><a indexNav={{@index}} class="categorynavNameClass" categorynavName_id={{categorynavId}}><b>{{categorynavName}}</b></a></li>
+									{{/testEqual}}
+								{{/if}}
+							{{/each}}
+   						</script>
+					</ul>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+
+		<div class="container" style="margin: 30px auto;">
+			<div class="row">
+				<div class="col-lg-8">
+
+					<div class="lg_blog_items">
+						<!-- 博客栏目 -->
+					</div>
+					<script id="blog-template" type="text/x-handlebars-template">
+						{{#each list}}
+								<div class="media blogDiv" blogId={{blogId}}>
+							<div class="row">
+								<div class="col-lg-3">
+									<div class="media-left">
+										<a href="#"><img
+											class="media-object img-responsive center-block"
+											alt="在默认的翻页中，链接居中对齐。" src="img/tim-logo.jpg">
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-9">
+									<div class="media-body">
+										<h4 class="media-heading">{{{blogTitle}}}</h4>
+										<div style="margin: 10px auto;" class="markArea">
+											
+										</div>
+										<div class="lg_blog_items_desc" class="" style="max-height:100px;overflow: hidden;margin: 10px auto;text-indent:15px">
+											  &nbsp;&nbsp;&nbsp;{{blogContent}}...&nbsp;&nbsp;&nbsp;<a class='gotoDetailPage' style='color: #FF6600;text-decoration: underline;'>详情&gt;&gt;</a></div>
+										<div>
+											<small style="color: #555;">发表&nbsp;&nbsp;{{fmtDate blogCtime}}</small>&nbsp;&nbsp; <small>阅读：<span
+												class="label label-success">{{blogRead}}</span></small>&nbsp;&nbsp; <small>评论：<span
+												class="label label-info">{{blogComment}}</span></small>&nbsp;&nbsp; <small>赞赏：<span
+												class="label label-warning">{{blogPraise}}</span></small>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{/each}}
+						</script>
+					<script id="blogsearch-template" type="text/x-handlebars-template">
+						{{#each list}}
+								<div class="media blogDiv" blogId={{blogId}}>
+							<div class="row">
+								<div class="col-lg-3">
+									<div class="media-left">
+										<a href="#"><img
+											class="media-object img-responsive center-block"
+											alt="在默认的翻页中，链接居中对齐。" src="img/tim-logo.jpg">
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-9">
+									<div class="media-body">
+										<h4 class="media-heading">{{{blogTitle}}}</h4>
+										<div style="margin: 10px auto;" class="markArea">
+											
+										</div>
+										<div class="lg_blog_items_desc" class="" style="max-height:100px;overflow: hidden;margin: 10px auto;text-indent:15px">
+											  &nbsp;&nbsp;&nbsp;{{{blogContent}}}...&nbsp;&nbsp;&nbsp;<a class='gotoDetailPage' style='color: #FF6600;text-decoration: underline;'>详情&gt;&gt;</a></div>
+										<div>
+											<small style="color: #555;">发表&nbsp;&nbsp;{{fmtDate blogCtime}}</small>&nbsp;&nbsp; <small>阅读：<span
+												class="label label-success">{{blogRead}}</span></small>&nbsp;&nbsp; <small>评论：<span
+												class="label label-info">{{blogComment}}</span></small>&nbsp;&nbsp; <small>赞赏：<span
+												class="label label-warning">{{blogPraise}}</span></small>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{/each}}
+					</script>
+					<nav aria-label="...">
+						<ul class="pagination blogPageNav"></ul>
+						<script id="pageNav-template" type="text/x-handlebars-template">
+							<li><a aria-label="Previous" class="toBeforPageA"><span aria-hidden="true">«</span></a></li>
+							  {{#each navigatepageNums}}
+									{{#testEqual this ../pageNum}}									
+									<li class="active"><a  class="hasPageNum" toPage={{this}}>{{this}}</a></li>
+									{{else}}
+									<li><a class="hasPageNum"  toPage={{this}}>{{this}}</a></li>
+									{{/testEqual}}
+								{{/each}}
+							<li><a class="toNextPageA" aria-label="Next"><span aria-hidden="true">»</span></a></li>	
+							</script>
+						</ul>
+					</nav>
+				</div>
+				<!-- /.col-lg-12 -->
+				<div class="col-lg-4">
+					<!--右侧公共栏-->
+					<div>
+						<h4 id="attentiontitle_area">
+							<script id="global_attentiontitle-template"
+								type="text/x-handlebars-template">
+							{{globalAttentiontitle}}
+						</script>
+						</h4>
+						<div class="row">
+							<div class="col-lg-3">
+								<a href="#" class="thumbnail"> <img
+									src="img/weixin-logo.jpg" alt="加【某某某】微信">
+								</a>
+							</div>
+							<div class="col-lg-3">
+								<a href="#" class="thumbnail"> <img src="img/phone-logo.png"
+									alt="给【某某某】打电话">
+								</a>
+							</div>
+							<div class="col-lg-3">
+								<a href="mailto:55491111@qq.com" class="thumbnail"> <img
+									src="img/emial-logo.jpg" alt="发邮件给【某某某】">
+								</a>
+							</div>
+							<div class="col-lg-3">
+								<a href="#" class="thumbnail"> <img src="img/tim-logo.jpg"
+									alt="TIM联络【某某某】">
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="lg_hot_list">
+						<h4 id="global_recommendtitle_area">
+							<script id="global_recommendtitle-template"
+								type="text/x-handlebars-template">
+							{{globalRecommendtitle}}
+						</script>
+						</h4>
+						<ul class="list-group tophot3Area"></ul>
+						<script type="text/x-handlebars-template" id="top3HotTemplate">
+						{{#each this}}
+							<li class="list-group-item">
+								<div class="row">
+									<div class="col-lg-3">
+										<img src="img/2.jpg" alt="..."
+											class="img-responsive center-block">
+									</div>
+									<div class="col-lg-9">
+										<a href="detail.html">{{blogTitle}}</a>
+										<div class="cl">
+											<small>{{fmtDate blogCtime}}</small> <span class="label label-success">{{blogRead}}</span>
+										</div>
+									</div>
+								</div>
+							</li>
+						{{/each}}
+						</script>
+
+					</div>
+
+					<div class="lg_category">
+						<h4 id="global_categorytitle_area">
+							<script id="global_categorytitle-template"
+								type="text/x-handlebars-template">
+							{{globalCategorytitle}}
+						</script>
+						</h4>
+						<div class="list-group lg_list-group"></div>
+						<script id="categoryV-template" type="text/x-handlebars-template">
+						{{#each this}}
+						{{#testEqual @index 0}}
+							<a href="JavaScript:void(0)" class="active  list-group-item categoryVBtn" cateGoryVid={{categoryvId}}>{{categoryvName}}</a> 
+							{{else}}
+							<a href="JavaScript:void(0)" class="list-group-item categoryVBtn" cateGoryVid={{categoryvId}}>{{categoryvName}}</a>
+						{{/testEqual}}
+						{{/each}}
+						</script>
+					</div>
+
+					<div class="lg_comment">
+						<h4 id="global_commenttitle_area">
+							<script id="global_commenttitle-template"
+								type="text/x-handlebars-template">
+							{{globalCommenttitle}}
+						</script>
+						</h4>
+						<div class="media">
+							<div class="media-left">
+								<a href="#"> <img class="media-object thumbnail"
+									data-src="holder.js/64x64" alt="64x64" src="img/tim-logo.jpg"
+									data-holder-rendered="true" style="width: 64px; height: 64px;">
+								</a>
+							</div>
+							<div class="media-body">
+								<!--<h4 class="media-heading">Media heading</h4>-->
+								Cras sit amet nibh libero. Donec lacinia congue felis in
+								faucibus.Cras sit amet nibh libero. Donec lacinia congue felis
+								in faucibus.
+								<div>
+									<small style="color: #555; font-weight: 600;">发表&nbsp;&nbsp;2017/12/10
+										15:10:30</small>
+								</div>
+							</div>
+						</div>
+
+						<div class="media">
+							<div class="media-body">
+								<!--<h4 class="media-heading">Media heading</h4>-->
+								vestibulum in vulputate at, tempus viverra turpis.
+								<div class="tr">
+									<small style="color: #555; font-weight: 600;">2017/12/10
+										15:10:30 &nbsp;&nbsp;回复</small>
+								</div>
+							</div>
+							<div class="media-right">
+								<a href="#"> <img class="media-object thumbnail"
+									data-src="holder.js/64x64" alt="64x64"
+									src="img/weixin-logo.jpg" data-holder-rendered="true"
+									style="width: 64px; height: 64px;">
+								</a>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+
+
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="lg_footer">
+					<div class="panel panel-default lg_panel-default">
+						<div class="panel-body"></div>
+						<script id="global_footertext-template"
+							type="text/x-handlebars-template">
+								{{globalFootertext}}
+    						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+	</div>
+
+	<!--回到顶部-->
+	<div id="goTopBtn"></div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<!--<script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>-->
+	<!-- <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script> -->
+	<script type="text/javascript" src="js/jQuery.min.js"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="js/handlebars.js"
+		type="text/javascript"></script>
+	<script type="text/javascript" src="js/index.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/cookie.js"></script>
+	<script type="text/javascript">
+		$(window).scroll(function() {
+			var sc = $(window).scrollTop();
+			var rwidth = $(window).width()
+			if (sc > 0) {
+				$("#goTopBtn").css("display", "block");
+				$("#goTopBtn").css("left", (rwidth - 36) + "px")
+			} else {
+				$("#goTopBtn").css("display", "none");
+			}
+		})
+		$("#goTopBtn").click(function() {
+			var sc = $(window).scrollTop();
+			$('body,html').animate({
+				scrollTop : 0
+			}, 500);
+		})
+	</script>
+
+	<script type="text/javascript">
+		/* $(function() {
+			//列表页的描述信息只显示xx个字符，超出就隐藏并显示 详情 超链接
+			var desc = $(".lg_blog_items_desc").html();
+			if (desc.length > 100) {
+				var sub_desc = desc.substr(0, 156);
+				$(".lg_blog_items_desc")
+						.html(
+								sub_desc
+										+ "..."
+										+ "&nbsp;&nbsp;&nbsp;<a href='detail.html' style='color: #FF6600;text-decoration: underline;'>详情&gt;&gt;</a>")
+			}
+		}); */
+	</script>
+</body>
+</html>
