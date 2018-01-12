@@ -12,6 +12,7 @@
 	<typeAliases>
 		<package name="com.neusoft.ssmpro.entity"/>
 		<package name="com.neusoft.ssmpro.vo"/>
+		<package name="com.neusoft.ssmpro.ztree"/>
 	</typeAliases>
 	
 	

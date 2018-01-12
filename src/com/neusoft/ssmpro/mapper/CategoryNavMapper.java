@@ -46,4 +46,15 @@ public interface CategoryNavMapper {
     
     List<CategoryNav> loadCategoryNavFirstSeven();
     
+    boolean addGetPriId(CategoryNav cateGoryNav);
+    
+    boolean updateNoId(Integer id);
+
+	List<CategoryNav> loadAllCategoryNav();
+
+	boolean switchstatus(CategoryNav categoryNav);
+
+	boolean editCategory(CategoryNav categoryNav);
+
+	List<CategoryNav> listByStatus(String categorynavStatus);
 }

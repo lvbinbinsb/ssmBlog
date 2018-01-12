@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.UnsupportedEncodingException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations= {"classpath:spring.xml","classpath:spring-mvc.xml"})
+@ContextConfiguration(locations= {"classpath:spring.xml","classpath:spring-mvc.xml","classpath:spring-solr.xml"})
 @WebAppConfiguration
 public class TestMvc
 {
@@ -35,6 +35,14 @@ public class TestMvc
 	public void setup() {
 		mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
 	}
+	
+	@Test
+	public void testBlogComment() throws Exception {
+		String str = mockMvc.perform(get("/blogComment/"+4)).andReturn().getResponse().getContentAsString();
+		System.out.println(str);
+	}
+	
+	
 	@Test
 	public void test1() throws Exception, Exception {
 //		System.out.println(mockMvc);

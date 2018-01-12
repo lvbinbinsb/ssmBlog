@@ -16,6 +16,11 @@ public class GlobalServiceImpl implements GlobalService{
 	public Global loadById(Integer id) {
 		return globalMapper.selectByPrimaryKey(id);
 	}
+
+	@Override
+	public Boolean updateGlobal(Global global) {
+		return globalMapper.updateByPrimaryKey(global)>0?true:false;
+	}
 	
 	
 }

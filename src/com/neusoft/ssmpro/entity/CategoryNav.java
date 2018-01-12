@@ -170,4 +170,5 @@ public class CategoryNav implements Serializable{
     public void setCategorynavCtime(Date categorynavCtime) {
         this.categorynavCtime = categorynavCtime;
     }
+
 }

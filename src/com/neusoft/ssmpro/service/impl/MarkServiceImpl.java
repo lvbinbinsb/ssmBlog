@@ -19,4 +19,29 @@ public class MarkServiceImpl implements MarkService{
 		return markMapper.loadByBlogId(blogId);
 	}
 
+	@Override
+	public List<Mark> listMarkPage() {
+		return markMapper.ListAllMark();
+	}
+
+	@Override
+	public boolean addMark(Mark mark) {
+		return markMapper.addMark(mark);
+	}
+
+	@Override
+	public boolean deleteMark(Integer markId) {
+		return markMapper.deleteByPrimaryKey(markId)>0?true:false;
+	}
+
+	@Override
+	public boolean switchstatus(Mark mark) {
+		if(mark.getMarkStatus().equals("0")) {
+			mark.setMarkStatus("1");
+		}else if(mark.getMarkStatus().equals("1")) {
+			mark.setMarkStatus("0");
+		}
+		return markMapper.switchstatus(mark);
+	}
+
 }

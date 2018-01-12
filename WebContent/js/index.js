@@ -77,25 +77,36 @@ $(function() {
 	//搜索框查询
 	$("#searchBtn").on('click',function(){
 		keyWords=$(".searchKeyWords").val();
-		
 		//发送ajax查询
-		$.ajax({
-			type:'POST',
-			url:path+"/search/"+keyWords,
-			dataType:'json',
-			success:function(data){
-				console.log(data);
-				$(".lg_blog_items").html("");
-				var blogsearchTemplate=Handlebars.compile($("#blogsearch-template").html());
-				$(".lg_blog_items").html(blogsearchTemplate(data));
-			},
-			error:function(){
-				layer.msg("服务器繁忙");
-			}
-		});
+		init_result(keyWords,1);
 		
 	});
 });
+
+function init_result(keyWords,curPn){
+	$.ajax({
+		type:'POST',
+		url:path+"/search/"+keyWords,
+		data:{
+			"pn":curPn
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			$(".lg_blog_items").html("");
+			var blogsearchTemplate=Handlebars.compile($("#blogsearch-template").html());
+			$(".lg_blog_items").html(blogsearchTemplate(data));
+			
+			//分页栏渲染
+			$(".blogPageNav").html("");
+			var pageSearchNavtemplate=Handlebars.compile($("#pageSearchNavtemplate").html());
+			$(".blogPageNav").html(pageSearchNavtemplate(data));
+		},
+		error:function(){
+			layer.msg("服务器繁忙");
+		}
+	});
+}
 
 function init_top3hot() {
 	$.ajax({
@@ -386,7 +397,11 @@ function init_pageBar() {
 	$(document).on('click', '.blogPageNav a.hasPageNum', function() {
 		var pn = $(this).text();
 		curPn = pn;
-		init_blog(curNavId, curVid, pn);
+		if(!$(this).hasClass("searchResult")){
+			init_blog(curNavId, curVid, pn);
+		}else{
+			init_result(keyWords, curPn)
+		}
 	});
 
 	// 下一页功能实现

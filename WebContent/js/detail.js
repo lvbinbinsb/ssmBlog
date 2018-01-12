@@ -1,77 +1,86 @@
 var path = "http://localhost/ssmBlog/";
 
 var curBlogId = $.cookie("blogId");
-var blogIds=$.cookie("blogIds");
-var beforeBlogId,nextBlogId;
+var blogIds = $.cookie("blogIds");
+var beforeBlogId, nextBlogId;
 var curCategoryNavId;
 var curCategoryVId;
 
-var hasBefore=false,hasNext=false;
+var hasBefore = false, hasNext = false;
 $(function() {
 	getParams();
-//	console.log(blogIds+":"+blogIds.split(",").length);
+	// console.log(blogIds+":"+blogIds.split(",").length);
 	init_global();
 	init_categoryNav();
 	init_categoryV(2);
 
 	init_top3hot();
-	
+
 	$(document).on('click', '.categoryVBtn', function() {
 		$(this).siblings().removeClass("active");
 		$(this).toggleClass('active');
 	});
 
-	init_blog(1,0);
+	init_blog(1, 0);
 
 	$(document).on('click', '#goIndexBtn', function() {
 		window.location = path + "index.html";
 	})
-	
+
 	getTopAndUnder();
-	
-	//点赞功能实现
-	$(document).on('click','#praise',function(){
-		var praise_img = $("#praise-img");
-		var text_box = $("#add-num");
-		var praise_txt = $("#praise-txt");
-		var num = parseInt(praise_txt.text());
-		if (praise_img.attr("src") == ("praise/Images/yizan.png")) {
-			$(this).html("<img src='praise/Images/zan.png' id='praise-img' class='animation' />");
-			praise_txt.removeClass("hover");
-			text_box.show().html("<em class='add-animation'>-1</em>");
-			$(".add-animation").removeClass("hover");
-			num -= 1;
-			praise_txt.text(num)
-			update_blog(0,-1);
-		} else {
-			$(this).html("<img src='praise/Images/yizan.png' id='praise-img' class='animation' />");
-			praise_txt.addClass("hover");
-			text_box.show().html("<em class='add-animation'>+1</em>");
-			$(".add-animation").addClass("hover");
-			num += 1;
-			praise_txt.text(num);
-			//更新点赞数目
-			update_blog(0,1);
-		}
-	});	
-	
+
+	// 点赞功能实现
+	$(document)
+			.on(
+					'click',
+					'#praise',
+					function() {
+						var praise_img = $("#praise-img");
+						var text_box = $("#add-num");
+						var praise_txt = $("#praise-txt");
+						var num = parseInt(praise_txt.text());
+						if (praise_img.attr("src") == ("praise/Images/yizan.png")) {
+							$(this)
+									.html(
+											"<img src='praise/Images/zan.png' id='praise-img' class='animation' />");
+							praise_txt.removeClass("hover");
+							text_box.show().html(
+									"<em class='add-animation'>-1</em>");
+							$(".add-animation").removeClass("hover");
+							num -= 1;
+							praise_txt.text(num)
+							update_blog(0, -1);
+						} else {
+							$(this)
+									.html(
+											"<img src='praise/Images/yizan.png' id='praise-img' class='animation' />");
+							praise_txt.addClass("hover");
+							text_box.show().html(
+									"<em class='add-animation'>+1</em>");
+							$(".add-animation").addClass("hover");
+							num += 1;
+							praise_txt.text(num);
+							// 更新点赞数目
+							update_blog(0, 1);
+						}
+					});
+
+	init_comment();
 
 });
 
-
-
-function init_blog(isBlogRead,isBlogPraise) {
-	var params="";
-	if(isBlogRead){
-		params+="blogRead="+isBlogRead+"&";
+function init_blog(isBlogRead, isBlogPraise) {
+	var params = "";
+	if (isBlogRead) {
+		params += "blogRead=" + isBlogRead + "&";
 	}
-	if(isBlogPraise){
-		params+="blogPraise="+isBlogPraise+"&";
+	if (isBlogPraise) {
+		params += "blogPraise=" + isBlogPraise + "&";
 	}
 	$.ajax({
 		url : path + 'blog/' + curBlogId,
 		type : 'POST',
-		data:params,
+		data : params,
 		dataType : 'json',
 		success : function(data) {
 			// //console.log(data);
@@ -88,24 +97,23 @@ function init_blog(isBlogRead,isBlogPraise) {
 	});
 }
 
-function update_blog(isBlogRead,isBlogPraise) {
-	var params="";
-	if(isBlogRead){
-		params+="blogRead="+isBlogRead+"&";
+function update_blog(isBlogRead, isBlogPraise) {
+	var params = "";
+	if (isBlogRead) {
+		params += "blogRead=" + isBlogRead + "&";
 	}
-	if(isBlogPraise){
-		params+="blogPraise="+isBlogPraise+"&";
+	if (isBlogPraise) {
+		params += "blogPraise=" + isBlogPraise + "&";
 	}
 	$.ajax({
 		url : path + 'blog/praise/' + curBlogId,
 		type : 'POST',
-		data:params,
+		data : params,
 		success : function(data) {
-			
+
 		}
 	});
 }
-
 
 // 获取博客跳转过来参数
 function getParams() {
@@ -122,8 +130,9 @@ function init_categoryV(navId) {
 		dataType : 'json',
 		success : function(data) {
 			console.log(data);
-//			console.log($('#categoryV-template').html());
-			var categoryVHTML = Handlebars.compile($('#categoryV-template').html());
+			// console.log($('#categoryV-template').html());
+			var categoryVHTML = Handlebars.compile($('#categoryV-template')
+					.html());
 			$('.lg_list-group').html(categoryVHTML(data));
 			$.each($(".categorynavNameClass"), function(index, data) {
 				var cateNavId = $(data).attr("categorynavName_id");
@@ -260,107 +269,136 @@ var handleHelper = Handlebars.registerHelper("fmtDate", function(data) {
 	return datetimeFormat(data);
 });
 
-
-//加载上下页标题
-function getTopAndUnder(){
-	var turn=false;
-	//console.log(blogIds);
-	var Idarr=blogIds.split(",");
-	var curIndex=0;
-	for(var i=0;i<Idarr.length;i++){
-		if(Idarr[i]==curBlogId){
-			curIndex=i;
+// 加载上下页标题
+function getTopAndUnder() {
+	var turn = false;
+	// console.log(blogIds);
+	var Idarr = blogIds.split(",");
+	var curIndex = 0;
+	for (var i = 0; i < Idarr.length; i++) {
+		if (Idarr[i] == curBlogId) {
+			curIndex = i;
 			break;
 		}
 	}
-	var nextTitle="";
-	var nextId,beforeId;
-	//console.log(curBlogId);
-	if(Idarr.length==3){
-	$.each(Idarr,function(index,data){
-		if(data!=curBlogId){
-			//获取上下篇文章的标题
-			$.ajax({
-				url:path+'blog/'+data,
-				type:'POST',
-				dataType:'json',
-				success:function(data){
-					if(curIndex==0&&!turn){
-						$("#beforeBlog").html(":暂无上一篇");
-						nextTitle=data.blogTitle;
-						nextId=data.blogId;
-						//console.log(nextTitle);
-						turn=true;
-					}else if(curIndex==0&&turn){
-						$("#nextBlog").html(nextTitle).attr("nextId",nextId);
-					}else if(curIndex==1&&!turn){
-						$("#beforeBlog").html(data.blogTitle).attr("beforeId",data.blogId);
-						turn=true;
-					}else if(curIndex==1&&turn){
-						$("#nextBlog").html(data.blogTitle).attr("nextId",data.blogId);;
-					}else if(curIndex==2&&!turn){
-						$("#nextBlog").html(":暂无下一篇");
-						turn=true;
-					}else if(curIndex==2&&turn){
-						$("#beforeBlog").html(data.blogTitle).attr("beforeId",data.blogId);
+	var nextTitle = "";
+	var nextId, beforeId;
+	// console.log(curBlogId);
+	if (Idarr.length == 3) {
+		$.each(Idarr, function(index, data) {
+			if (data != curBlogId) {
+				// 获取上下篇文章的标题
+				$.ajax({
+					url : path + 'blog/' + data,
+					type : 'POST',
+					dataType : 'json',
+					success : function(data) {
+						if (curIndex == 0 && !turn) {
+							$("#beforeBlog").html(":暂无上一篇");
+							nextTitle = data.blogTitle;
+							nextId = data.blogId;
+							// console.log(nextTitle);
+							turn = true;
+						} else if (curIndex == 0 && turn) {
+							$("#nextBlog").html(nextTitle).attr("nextId",
+									nextId);
+						} else if (curIndex == 1 && !turn) {
+							$("#beforeBlog").html(data.blogTitle).attr(
+									"beforeId", data.blogId);
+							turn = true;
+						} else if (curIndex == 1 && turn) {
+							$("#nextBlog").html(data.blogTitle).attr("nextId",
+									data.blogId);
+							;
+						} else if (curIndex == 2 && !turn) {
+							$("#nextBlog").html(":暂无下一篇");
+							turn = true;
+						} else if (curIndex == 2 && turn) {
+							$("#beforeBlog").html(data.blogTitle).attr(
+									"beforeId", data.blogId);
+						}
+
 					}
-					
-				}
-			});
-		}
-	});
-	}else if(Idarr.length==1){
+				});
+			}
+		});
+	} else if (Idarr.length == 1) {
 		$("#beforeBlog").html(":暂无上一篇");
 		$("#nextBlog").html(":暂无下一篇");
-	}else if(Idarr.length==2){
-		if(curIndex==0){
+	} else if (Idarr.length == 2) {
+		if (curIndex == 0) {
 			$("#beforeBlog").html(":暂无上一篇");
 			$.ajax({
-				url:path+'blog/'+Idarr[1],
-				type:'POST',
-				dataType:'json',
-				success:function(data){
-					$("#nextBlog").html(data.blogTitle).attr("nextId",data.blogId);
+				url : path + 'blog/' + Idarr[1],
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+					$("#nextBlog").html(data.blogTitle).attr("nextId",
+							data.blogId);
 				}
 			});
-			
-		}else if(curIndex==1){
+
+		} else if (curIndex == 1) {
 			$("#nextBlog").html(":暂无下一篇");
 			$.ajax({
-				url:path+'blog/'+Idarr[0],
-				type:'POST',
-				dataType:'json',
-				success:function(data){
-					$("#beforeBlog").html(data.blogTitle).attr("beforeId",data.blogId);
+				url : path + 'blog/' + Idarr[0],
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+					$("#beforeBlog").html(data.blogTitle).attr("beforeId",
+							data.blogId);
 				}
 			});
 		}
 	}
-	
-	//绑定事件
-	$(document).on('click','.linkBlog',function(){
-		if($(this).html().indexOf(":暂无")<0){
-			//页面跳转
-			var BlogId=$(this).find(".hasBlogIdSpan").attr("beforeId")||$(this).find(".hasBlogIdSpan").attr("nextId");
-			curBlogId=BlogId;
-			init_blog(1, 0);
-		}
-		
-	});
+
+	// 绑定事件
+	$(document).on(
+			'click',
+			'.linkBlog',
+			function() {
+				if ($(this).html().indexOf(":暂无") < 0) {
+					// 页面跳转
+					var BlogId = $(this).find(".hasBlogIdSpan")
+							.attr("beforeId")
+							|| $(this).find(".hasBlogIdSpan").attr("nextId");
+					curBlogId = BlogId;
+					init_blog(1, 0);
+				}
+
+			});
 }
 
-//热门标签三个
+// 热门标签三个
 function init_top3hot() {
 	$.ajax({
 		url : path + 'blog/top3hot',
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			//console.log(data);
+			// console.log(data);
 			var top3HotTemplate = Handlebars.compile($("#top3HotTemplate")
 					.html());
 			$(".tophot3Area").html(top3HotTemplate(data));
 		}
 	});
 
+}
+
+/**
+ * 异步加载评论功能
+ * 
+ * @returns
+ */
+function init_comment() {
+	$.ajax({
+		url : path + 'blogComment/' + curBlogId,
+		type : 'get',
+		dataType : 'json',
+		success : function(data) {
+			console.log(data);
+			var commentTemplate = Handlebars.compile($("#commentTemplate").html());
+			$(".historyComment").html(commentTemplate(data));
+		}
+	});
 }

@@ -166,6 +166,18 @@ body {
 								{{/each}}
 							<li><a class="toNextPageA" aria-label="Next"><span aria-hidden="true">»</span></a></li>	
 							</script>
+							
+							<script id="pageSearchNavtemplate" type="text/x-handlebars-template">
+							<li><a aria-label="Previous" class="searchResult toBeforPageA"><span aria-hidden="true">«</span></a></li>
+							  {{#each navigatepageNums}}
+									{{#testEqual this ../pageNum}}									
+									<li class="active"><a  class="hasPageNum searchResult" toPage={{this}}>{{this}}</a></li>
+									{{else}}
+									<li><a class="hasPageNum searchResult"  toPage={{this}}>{{this}}</a></li>
+									{{/testEqual}}
+								{{/each}}
+							<li><a class="toNextPageA searchResult" aria-label="Next"><span aria-hidden="true">»</span></a></li>	
+							</script>
 						</ul>
 					</nav>
 				</div>

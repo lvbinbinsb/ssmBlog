@@ -6,4 +6,6 @@ public interface GlobalService {
 
 	Global loadById(Integer id);
 
+	Boolean updateGlobal(Global global);
+
 }

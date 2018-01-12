@@ -86,4 +86,24 @@
 		by categoryv_no limit 0,5
 	</select>
 
+	<select id="listbypage" resultType="CategoryV">
+		select * from tbl_category_v where categorynavid=#{id} order by categoryv_id desc 
+	</select> 
+	
+	<select id="loadTreeNodeByNavId" resultType="ZtreeVo">
+		select categoryv_id id ,categoryv_name name ,categorynavid pid  from
+		tbl_category_v where categorynavid=#{id} order by categoryv_no
+	</select>
+	
+	<update id="updateNode">
+		update tbl_category_v set categoryv_name=#{name}  where categoryv_id=#{id}
+	</update>
+	
+	<update id="changeCategoryNav">
+		update tbl_category_v set categorynavid =#{pid} where categoryv_id=#{id}
+	</update>
+	
+	<insert id="addNode" useGeneratedKeys="true" keyProperty="id">
+		insert into tbl_category_v (categoryv_name, categorynavid) values (#{name},#{pid})
+	</insert>
 </mapper>

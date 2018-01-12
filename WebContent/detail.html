@@ -16,10 +16,9 @@
 <!--[if lt IE 9]>
 	      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	    <![endif]-->
+<![endif]-->
 <link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
-<link rel="stylesheet"
-	href="css/default.min.css">
+<link rel="stylesheet" href="css/default.min.css">
 <link rel="stylesheet" type="text/css" href="praise/Css/praise.css" />
 <link rel="stylesheet" type="text/css" href="css/reset-common.css" />
 <style type="text/css">
@@ -105,9 +104,13 @@
 					<div class="lg_blog_detail_content_page">
 						<nav aria-label="...">
 							<ul class="pager">
- 						<li class="previous"><a href="JavaScript:void(0)" class="linkBlog beforePage"><span aria-hidden="true">&lt;&lt;</span> <b>上一篇</b><span class="hasBlogIdSpan" id="beforeBlog"></span></a></li>
-			        <li class="next"><a href="JavaScript:void(0)" class="linkBlog nextPage"><b>下一篇</b><span id="nextBlog" class="hasBlogIdSpan"></span> <span aria-hidden="true">&gt;&gt;</span></a></li>
-			  
+								<li class="previous"><a href="JavaScript:void(0)"
+									class="linkBlog beforePage"><span aria-hidden="true">&lt;&lt;</span>
+										<b>上一篇</b><span class="hasBlogIdSpan" id="beforeBlog"></span></a></li>
+								<li class="next"><a href="JavaScript:void(0)"
+									class="linkBlog nextPage"><b>下一篇</b><span id="nextBlog"
+										class="hasBlogIdSpan"></span> <span aria-hidden="true">&gt;&gt;</span></a></li>
+
 							</ul>
 						</nav>
 					</div>
@@ -117,6 +120,31 @@
 							href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a
 							href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a
 							href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址">复制网址</a>
+					</div>
+					<div style="margin:20px;">
+						<p class="small"><h4>评论区</h1></p>
+						<hr>
+						<!-- 展示历史评论区 -->
+						<div class="historyComment" style="font-size:17px">
+							
+						</div>
+						<br/>
+						<script type="text/x-handlebars-template" id="commentTemplate">
+							{{#each this}}
+								<div>
+							<p>1L {{username}}回复 楼主:{{commentContentQuestion}}
+								<br/>
+							&nbsp;&nbsp;&nbsp;楼主    回复 {{username}}：{{commentContentAnswer}}</p>
+							</div>
+							<br/>
+
+							{{/each}}
+						</script>
+						<textarea id="texthelpblock" class="form-control" rows="3">
+  						 </textarea>
+							<p class="text-right">
+							<button type="button" class="btn btn-primary btn-xs">提交评论</button>
+						</p>
 					</div>
 					<script>
 						window._bd_share_config = {

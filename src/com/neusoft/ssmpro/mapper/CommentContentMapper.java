@@ -1,7 +1,9 @@
 package com.neusoft.ssmpro.mapper;
 
-import com.neusoft.ssmpro.entity.CommentContent;
 import java.util.List;
+
+import com.neusoft.ssmpro.entity.CommentContent;
+import com.neusoft.ssmpro.vo.BlogComment;
 
 public interface CommentContentMapper {
     /**
@@ -43,4 +45,6 @@ public interface CommentContentMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(CommentContent record);
-}
+    
+    List<BlogComment>  loadBlogCommentByBlogId(Long blogId);
+   }

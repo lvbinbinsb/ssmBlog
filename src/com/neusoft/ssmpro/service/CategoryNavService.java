@@ -11,5 +11,18 @@ public interface CategoryNavService {
 	 * @return: List<CategoryNav>
 	 */
 	List<CategoryNav> loadategoryNav();
+
+	boolean addCateGoryNav(CategoryNav categoryNav);
+
+	List<CategoryNav> loadAllCategoryNav();
+
+	boolean switchstatus(CategoryNav categoryNav);
+
+	boolean deleteCategoryNav(Integer categoryNavId);
+
+	boolean editCategory(CategoryNav categoryNav);
+	
+	//返回状态为1的集合
+	List<CategoryNav> listByStatus(String categorynavStatus);
 	
 }

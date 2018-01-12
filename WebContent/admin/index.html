@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- 该标签代表本页面所有的相对路径的请求 全部相对本路径发送请求 -->
+<base href="http://localhost/ssmBlog/admin/">
+<link rel="shortcut icon" href="favicon.ico">
+<title>博客站点后台管理</title>
+<link rel="stylesheet" href="layui/css/layui.css">
+<link href="css/buttons.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="ztree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="js/jQuery.min.js"></script>
+<script type="text/javascript" src="js/jquery.ztree.all.min.js"></script>
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+			<div class="layui-logo">博客后台管理系统</div>
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item"><a href="javascript:;"> <img
+						src="img/RCzsdCq.jpg" class="layui-nav-img"> admin
+				</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="">密码重置</a>
+						</dd>
+					</dl></li>
+				<li class="layui-nav-item"><a href="">退出后台</a></li>
+			</ul>
+		</div>
+
+		<div class="layui-side layui-bg-black">
+			<div class="layui-side-scroll">
+				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+				<ul class="layui-nav layui-nav-tree" lay-filter="test">
+					<li class="layui-nav-item"><a href="JavaScript:void(0);"
+						id="nav_site">站点综合管理</a></li>
+					<li class="layui-nav-item"><a href="JavaScript:void(0);"
+						id="nav_categorynav">一级分类管理</a></li>
+					<li class="layui-nav-item"><a href="JavaScript:void(0);"
+						id="nav_categoryv">二级分类管理</a></li>
+					<li class="layui-nav-item"><a href="JavaScript:void(0);"
+						id="nav_categoryvZtree">二级分类ZTree管理</a></li>
+					<li class="layui-nav-item"><a href="JavaScript:void(0);"
+						id="nav_mark">标签管理</a></li>
+					<li class="layui-nav-item"><a href="JavaScript:void(0);"
+						id="nav_blog">博客管理</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="layui-body">
+			<div class="container" style="margin-top: 20px;">
+				<h1 style="height: 200px; line-height: 200px; text-align: center;">欢迎进入博客系统后台管理系统！</h1>
+				<ul class="ztree" id="ztree" style="width:350px;height:350px;margin:0 auto"></ul>
+				<!-- html页面内容编写区域  start -->
+				
+
+
+				<!-- html页面内容编写区域  end -->
+
+
+
+			</div>
+		</div>
+<script type="text/x-handlebars-template" id="categoryVTemplate">
+	<div class="categoryv_list">
+			<div class="categoryv_list">
+			<h2>二级分类管理</h2>
+			<p style="text-indent:4em">
+				<select class="change_nav">
+					<option>请选择一级分类名称：</option>
+					
+				</select>
+			</p>			<table width="100%" border="1" >
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>ID</th>
+						<th>ORDER</th>
+						<th>NAME</th>
+						<th>STATUS</th>
+						<th>CITME</th>
+						<th>OPERATION</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each list}}
+					<tr>
+						<td>{{myCount @index}}</td>
+						<td>{{categoryvId}}</td>
+						<td>{{categoryvNo}}</td>
+						<td>{{categoryvName}}</td>
+						<td>{{fmtStatus categoryvStatus}}</td>
+						<td>{{format_comment_content_ctime_helper categoryvCtime}}</td>
+						<td>
+							<button class="layui-btn layui-btn-sm layui-btn-normal categorynav_del_btn" id="{{categoryvId}}"> 删除</button>
+							<button class="layui-btn layui-btn-sm categorynav_edit_btn" id="{{categoryvId}}">编辑</button>
+							<button class="layui-btn layui-btn-sm layui-btn-danger categorynav_STATUS_btn" id="{{categoryvId}}-{{categoryvStatus}}">{{SwitchStatus categoryvStatus}}</button>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="7"><span>第{{pageNum}} / {{pages}} 页，共 {{total}} 记录</span>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn pageFirst" title="1">First</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn pagePrev" title="{{beforePageNum pageNum}}">Prev</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn  pageNext" title="{{nextPageNum pageNum}}">Next</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn  pageLast" title="{{pages}}">Last</a>
+							</td>
+	</tr>
+	</tfoot>
+	</table>
+	</div>
+	</script>
+		<div class="layui-footer">
+			<!-- 底部固定区域 -->
+			© layui.com - 底部固定区域
+		</div>
+	</div>
+
+
+	<!-- 编写handlebars模板 -->
+	<script type="text/x-handlebars-template" id="global_ht">
+<div class="content">
+<h2 style="text-align:center;">编辑博客站点综合数据</h2>
+<form class="layui-form" action="global/update" id="global_form">
+  <div class="layui-form-item">
+    <label class="layui-form-label">站点标题</label>
+    <div class="layui-input-block">
+      <input type="text" name="globalHtitle" value="{{globalHtitle}}" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:600px;">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">版权信息</label>
+    <div class="layui-input-block">
+      <input type="text" name="globalFootertext" value="{{globalFootertext}}" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:600px;">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">博主栏目标题</label>
+    <div class="layui-input-block">
+      <input type="text" name="globalAttentiontitle" value="{{globalAttentiontitle}}" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:600px;">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">热点文章栏目标题</label>
+    <div class="layui-input-block">
+      <input type="text" name="globalRecommendtitle" value="{{globalRecommendtitle}}" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:600px;">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">一级分类栏目标题</label>
+    <div class="layui-input-block">
+      <input type="text" name="globalCategorytitle" value="{{globalCategorytitle}}" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:600px;">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">评论栏目标题</label>
+    <div class="layui-input-block">
+      <input type="text" name="globalCommenttitle" value="{{globalCommenttitle}}" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:600px;">
+    </div>
+  </div>
+  <input type="hidden" name="globalId"  value="{{globalId}}">
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+		<input type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" id="global_submit" value="确认提交">
+      	<input type="button" class="layui-btn layui-btn-primary" value="重置" id="global_reset">
+    </div>
+  </div>
+</form>
+</div>
+</script>
+	<script type="text/x-handlebars-template" id="categorynav_ht">
+	<div class="categorynav_list">
+			<h2>一级分类管理</h2>
+<p style="text-indent:4em;"><button class="layui-btn layui-btn-sm layui-btn-warm categorynav_add_btn">添加</button></p>
+			<table width="100%" border="1" >
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>ID</th>
+						<th>ORDER</th>
+						<th>NAME</th>
+						<th>STATUS</th>
+						<th>CITME</th>
+						<th>OPERATION</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each list}}
+					<tr>
+						<td>{{myCount @index}}</td>
+						<td>{{categorynavId}}</td>
+						<td>{{categorynavNo}}</td>
+						<td>{{categorynavName}}</td>
+						<td>{{fmtStatus categorynavStatus}}</td>
+						<td>{{format_comment_content_ctime_helper categorynavCtime}}</td>
+						<td>
+							<button class="layui-btn layui-btn-sm layui-btn-normal categorynav_del_btn" id="{{categorynavId}}"> 删除</button>
+							<button class="layui-btn layui-btn-sm categorynav_edit_btn" id="{{categorynavId}}">编辑</button>
+							<button class="layui-btn layui-btn-sm layui-btn-danger categorynav_STATUS_btn" id="{{categorynavId}}-{{categorynavStatus}}">{{SwitchStatus categorynavStatus}}</button>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="7"><span>第{{pageNum}} / {{pages}} 页，共 {{total}} 记录</span>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn pageFirst" title="1">First</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn pagePrev" title="{{beforePageNum pageNum}}">Prev</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn  pageNext" title="{{nextPageNum pageNum}}">Next</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn  pageLast" title="{{pages}}">Last</a>
+							</td>
+	</tr>
+	</tfoot>
+	</table>
+	</div>
+	</script>
+
+	//博客标签管理栏目
+	<script type="text/x-handlebars-template" id="blogmarktemplate">
+	<div class="blogmark_list">
+			<h2>博客标签管理</h2>
+<p style="text-indent:4em;"><button class="layui-btn layui-btn-sm layui-btn-warm blogmark_add_btn">添加</button></p>
+			<table width="100%" border="1" >
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>ID</th>
+						<th>NAME</th>
+						<th>STATUS</th>
+						<th>CITME</th>
+						<th>OPERATION</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each list}}
+					<tr>
+						<td>{{myCount @index}}</td>
+						<td>{{markId}}</td>
+						<td>{{markName}}</td>
+						<td>{{fmtStatus markStatus}}</td>
+						<td>{{format_comment_content_ctime_helper markCtime}}</td>
+						<td>
+							<button class="layui-btn layui-btn-sm layui-btn-normal blogmark_del_btn" id="{{markId}}"> 删除</button>
+							<button class="layui-btn layui-btn-sm blogmark_edit_btn" id="{{markId}}">编辑</button>
+							<button class="layui-btn layui-btn-sm layui-btn-danger blogmark_STATUS_btn" id="{{markId}}-{{markStatus}}">{{SwitchStatus markStatus}}</button>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="7"><span>第{{pageNum}} / {{pages}} 页，共 {{total}} 记录</span>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small markpageNumBtn pageFirst" title="1">First</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small markpageNumBtn pagePrev" title="{{beforePageNum pageNum}}">Prev</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small markpageNumBtn  pageNext" title="{{nextPageNum pageNum}}">Next</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small markpageNumBtn  pageLast" title="{{pages}}">Last</a>
+							</td>
+	</tr>
+	</tfoot>
+	</table>
+	</div>
+	</script>
+
+
+	<script src="js/handlebars.min.js"></script>
+	<script src="js/jquery.form.min.js"></script>
+	<script src="layui/layui.all.js"></script>
+	<script src="js/admin.js"></script>
+	<script src="js/admin-ztree.js"></script>
+	<script>
+		//JavaScript代码区域
+		layui.use('element', function() {
+			var element = layui.element;
+		});
+	</script>
+
+
+
+
+
+
+</body>
+</html>

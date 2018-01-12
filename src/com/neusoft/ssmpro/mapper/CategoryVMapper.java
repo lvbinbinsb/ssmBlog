@@ -1,6 +1,8 @@
 package com.neusoft.ssmpro.mapper;
 
 import com.neusoft.ssmpro.entity.CategoryV;
+import com.neusoft.ssmpro.ztree.ZtreeVo;
+
 import java.util.List;
 
 public interface CategoryVMapper {
@@ -48,5 +50,15 @@ public interface CategoryVMapper {
     List<CategoryV> loadCategoryVByNavId(Integer cateNavId);
     
     List<Integer> loadFirstNavVIds();
+
+	List<CategoryV> listbypage(Integer categorynavId);
+	
+	List<ZtreeVo> loadTreeNodeByNavId(Integer categorynavId);
+
+	boolean updateNode(ZtreeVo node);
+
+	void addNode(ZtreeVo newNode);
+	
+	int changeCategoryNav(ZtreeVo newNode);
     
 }

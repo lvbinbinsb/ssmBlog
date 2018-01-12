@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+.content{width:800px;margin:20px auto;}
+
+.layui-form-label{width:150px;}
+.layui-input{border-color:#999;}
+
+h2{text-align:center;}
+table{
+	width:96%;
+	margin:10px auto;
+	/* background:#d3d3d3; */
+}
+table thead tr{background:#dedede;}
+table tbody tr:hover{background:lightgreen;cursor:pointer;}
+/* table td{
+	background:#ffffff;
+} */
+/* table td:hover{background:lightgreen;} */
+td , th{
+	width:30px;
+	height:45px;
+	text-align:center;
+} 
+
+
+
+

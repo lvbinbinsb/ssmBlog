@@ -45,4 +45,11 @@ public interface MarkMapper {
     int updateByPrimaryKey(Mark record);
     
     List<Mark> loadByBlogId(Long blodId);
+    
+    
+    List<Mark> ListAllMark();
+
+	boolean addMark(Mark mark);
+
+	boolean switchstatus(Mark mark);
 }

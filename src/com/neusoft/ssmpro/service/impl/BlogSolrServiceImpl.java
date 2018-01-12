@@ -1,5 +1,8 @@
 package com.neusoft.ssmpro.service.impl;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +34,8 @@ public class BlogSolrServiceImpl implements BlogSolrService {
 		// 3、设置查询条件
 		query.set("q", "blog_title:"+keyWord, "blog_content:spring"+keyWord);// 设置查询关键字
 		query.setSort("blog_id", ORDER.desc);// 按照id降序排列
-		query.setStart(pn);
+		int start=(pn-1)*pageSize;
+		query.setStart(start);
 		query.setRows(pageSize);// 分页条件
 		query.set("df", "blog_title");
 		// 开启高亮显示
@@ -78,7 +82,7 @@ public class BlogSolrServiceImpl implements BlogSolrService {
 		if (pageInfo != null) {
 			pageInfo.setPages(pageInfo.getTotal() % pageInfo.getPageSize() == 0
 					? (int) (pageInfo.getTotal() / pageInfo.getPageSize())
-					: (int) (pageInfo.getTotal() % pageInfo.getPageSize() + 1));
+					: (int) (pageInfo.getTotal() / pageInfo.getPageSize() + 1));
 			pageInfo.setPrePage((pageInfo.getPageNum() == 1 ? 1 : pageInfo.getPageNum() - 1));
 			pageInfo.setNextPage(
 					(pageInfo.getPageNum() == pageInfo.getPages() ? pageInfo.getPages() : pageInfo.getPageNum() + 1));
@@ -86,6 +90,16 @@ public class BlogSolrServiceImpl implements BlogSolrService {
 			pageInfo.setIsLastPage(pageInfo.getPageNum() == pageInfo.getPages() ? true : false);
 			pageInfo.setHasNextPage(pageInfo.getPageNum() != pageInfo.getPages() ? true : false);
 			pageInfo.setHasPreviousPage(pageInfo.getPageNum() != 1 ? true : false);
+			int[] navigatepageNums=null;
+			if(pageInfo.getPages()>3) {
+				navigatepageNums=new int[3];
+			}else {
+				navigatepageNums=new int[pageInfo.getPages()>1?pageInfo.getPages():1];
+			}
+			for(int i=0;i<navigatepageNums.length;i++) {
+				navigatepageNums[i]=i+1;
+			}
+			pageInfo.setNavigatepageNums(navigatepageNums);
 		}
 	}
 

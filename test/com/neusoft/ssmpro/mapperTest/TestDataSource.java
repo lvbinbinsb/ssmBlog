@@ -23,12 +23,15 @@ import com.neusoft.ssmpro.entity.Mark;
 import com.neusoft.ssmpro.mapper.BlogMapper;
 import com.neusoft.ssmpro.mapper.CategoryNavMapper;
 import com.neusoft.ssmpro.mapper.CategoryVMapper;
+import com.neusoft.ssmpro.mapper.CommentContentMapper;
 import com.neusoft.ssmpro.mapper.GlobalMapper;
 import com.neusoft.ssmpro.mapper.MarkMapper;
+import com.neusoft.ssmpro.vo.BlogComment;
 import com.neusoft.ssmpro.vo.BlogVo;
+import com.neusoft.ssmpro.ztree.ZtreeVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring.xml" })
+@ContextConfiguration(locations = { "classpath:spring.xml","classpath:spring-solr.xml" })
 public class TestDataSource {
 
 	@Autowired
@@ -55,6 +58,21 @@ public class TestDataSource {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@Autowired
+	private CommentContentMapper ccMapper;
+	
+	
+	@Test
+	public void testNode() {
+		ZtreeVo newNode=new ZtreeVo();
+		newNode.setId(35);
+		newNode.setPid(6);
+		int i = categoryVMapper.changeCategoryNav(newNode);
+		System.out.println(i);
+	}
+	
+	
+	
 	@Test
 	public void testDs() {
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
@@ -65,6 +83,7 @@ public class TestDataSource {
 		}
 	}
 
+	
 	@Test
 	public void testBlogExist() {
 //		System.out.println(blogMapper.checkBlogExist(150l));
@@ -73,6 +92,13 @@ public class TestDataSource {
 		map.put("blogRead", "false");
 		map.put("blogPraise", -1);
 		blogMapper.updateBlogByMap(map);
+	}
+	
+	@Test
+	public void testBlogComment() {
+		List<BlogComment> list = ccMapper.loadBlogCommentByBlogId(4l);
+		System.out.println(list.size());
+		list.forEach((bc)->{System.out.println(bc);});
 	}
 	
 	@Test
