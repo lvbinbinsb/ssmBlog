@@ -14,6 +14,7 @@ public class Blog implements Serializable{
 
 	private static final long serialVersionUID = -4113079677441067676L;
 
+	//Field是solrJ的注释  用于schema.xml对应
 	@Field("blog_id")
 	private Integer blogId;
 	@Field("blog_no")

@@ -90,8 +90,8 @@ function init_blog(isBlogRead, isBlogPraise) {
 					.html());
 			$(".blogDetailArea").html(blogTitleTemplate(data));
 
-			var blogContentTemplate = Handlebars.compile($(
-					"#blogContentTemplate").html());
+			var blogContentTemplate = Handlebars.compile($("#blogContentTemplate").html());
+			console.log(data.blogContent);
 			$(".lg_blog_detail_content").html(blogContentTemplate(data));
 		}
 	});
@@ -129,7 +129,7 @@ function init_categoryV(navId) {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			// console.log($('#categoryV-template').html());
 			var categoryVHTML = Handlebars.compile($('#categoryV-template')
 					.html());
@@ -396,7 +396,7 @@ function init_comment() {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			var commentTemplate = Handlebars.compile($("#commentTemplate").html());
 			$(".historyComment").html(commentTemplate(data));
 		}

@@ -37,9 +37,22 @@ public class TestMvc
 	}
 	
 	@Test
+	public void testMark() throws Exception {
+		String str = mockMvc.perform(get("/showBlogMarkPage")).andReturn().getResponse().getContentAsString();
+		System.out.println(str);
+	}
+	
+	@Test
 	public void testBlogComment() throws Exception {
 		String str = mockMvc.perform(get("/blogComment/"+4)).andReturn().getResponse().getContentAsString();
 		System.out.println(str);
+	}
+	
+	
+	@Test
+	public void testDemo() throws Exception {
+		 String string = mockMvc.perform(get("/blog/list").param("pn", "1")).andReturn().getResponse().getContentAsString();
+		 System.out.println(string);
 	}
 	
 	

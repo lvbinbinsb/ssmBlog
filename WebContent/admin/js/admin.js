@@ -35,6 +35,7 @@ $(function() {
 	});
 
 	Handlebars.registerHelper("nextPageNum", function(index) {
+		//console.log();
 		if (index == pages) {
 			return pages;
 		} else {
@@ -80,7 +81,6 @@ $(function() {
 			success : function(str) {
 				// alert(str);
 				var obj = eval("(" + str + ")");
-				console.log(obj);
 				// 编译模板
 				var global_ht = Handlebars.compile($("#global_ht").html());
 				// 模板渲染数据
@@ -213,10 +213,8 @@ $(function() {
 														},
 														success : function(str) {
 															if (str == "true") {
-																layer
-																		.close(index);
-																layer
-																		.msg("修改成功");
+																layer.close(index);
+																layer.msg("修改成功");
 																// //重新查询所有的数据并展示在当前页面中
 																setTimeout(
 																		'$("#nav_categorynav").trigger("click")',
@@ -320,11 +318,7 @@ $(function() {
 						getCategoryV(null);
 					});
 
-	$(document)
-			.on(
-					"change",
-					".change_nav",
-					function() {
+	$(document).on("change",".change_nav",function() {
 						var categorynav_id = $(this).val();
 						$
 								.ajax({
@@ -337,10 +331,7 @@ $(function() {
 									success : function(data) {
 										// console.log(data);
 										if (data.list.length != 0) {
-											var categoryVTemplate = Handlebars
-													.compile($(
-															"#categoryVTemplate")
-															.html());
+											var categoryVTemplate = Handlebars.compile($("#categoryVTemplate").html());
 											// 模板渲染数据
 											$(".container").empty();
 											$(".container").html(
@@ -359,12 +350,96 @@ $(function() {
 								});
 					});
 
+	//动态触发博客展示页面
+	$(document).on("click","#nav_blog",function(){
+		toblogPage(1);
+	});
 	
 });
 
-function beforeDrag(treeId, treeNodes) {
-	return false;
+var markList=new Array();
+
+function toblogPage(pn){
+	$.ajax({
+		type:'get',
+		url:path+'blog/list',
+		data:{
+			"pn":pn
+		},
+		dataType:'json',
+		success:function(data){
+			//console.log(data);
+			curPn=pn;
+			pages=data.pages;
+			var blogTemplate = Handlebars.compile($("#blogTemplate").html());
+			$(".container").html(blogTemplate(data));
+			$(document).on("click",".blog_add_btn",function(){
+				$(".container").html("");
+				var blogAddTemplate = Handlebars.compile($("#blogAddTemplate").html());
+				$(".container").html(blogAddTemplate());
+				var ue = UE.getEditor('editor');
+				showMarks(1);
+				showCategory();
+			});
+			
+			
+			
+			$(document).off("click",".pageNumBtn");
+			$(document).on("click",".pageNumBtn",function(){
+				toblogPage($(this).attr("title"));
+			});
+			$(document).off("click",".categorynav_STATUS_btn");
+			$(document).on("click",".categorynav_STATUS_btn",function(){
+				//博客修改状态
+				var id=$(this).attr("id").split("-")[0];
+				var status=$(this).attr("id").split("-")[1];
+				$.ajax({
+					type:'POST',
+					url:path+"/blog/switch/"+id,
+					data:{
+						"status":status
+					},
+					dataType:'json',
+					success:function(data){
+						if(data==true){
+							layer.msg("修改成功");
+							toblogPage(curPn);
+						}
+						
+					}
+					
+				});
+			});
+			//绑定删除按钮
+			$(document).on('click',".blog_del_btn",function(){
+				var titleName=$("#blogTitle").html();
+				var id=$("#blogId").html();
+				layer.confirm('您确定要删除'+titleName+'?', {
+					  btn: ['坚决要删','再考虑考虑吧'] //按钮
+					}, function(){
+						//执行删除操作
+						$.ajax({
+							type:'GET',
+							url:path+'blog/delete/'+id,
+							dataType:'json',
+							success:function(data){
+								if(data==true){
+									layer.msg("删除成功");
+									toblogPage(curPn);
+								}
+							}
+						});
+					}, function(){
+					  layer.msg('也可以这样', {
+					    time: 20000, //20s后自动关闭
+					  });
+					});
+			});
+		}
+	});
 }
+
+
 
 
 function to_page(pn) {

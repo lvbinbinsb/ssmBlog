@@ -2,6 +2,7 @@ package com.neusoft.ssmpro.service.impl;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -103,4 +104,28 @@ public class BlogSolrServiceImpl implements BlogSolrService {
 		}
 	}
 
+	@Override
+	public void buildIndexAfterAddBlog(Blog blog) {
+		try {
+			httpSolrServer.addBean(blog);
+			httpSolrServer.commit();
+		} catch (IOException e) {
+			try {
+				httpSolrServer.rollback();
+			} catch (SolrServerException | IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch (SolrServerException e) {
+			try {
+				httpSolrServer.rollback();
+			} catch (SolrServerException | IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+	}
+
+	
+	
 }

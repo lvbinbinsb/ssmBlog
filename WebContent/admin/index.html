@@ -10,12 +10,13 @@
 <link rel="shortcut icon" href="favicon.ico">
 <title>博客站点后台管理</title>
 <link rel="stylesheet" href="layui/css/layui.css">
-<link href="css/buttons.min.css"
-	rel="stylesheet">
+<link href="css/buttons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="css/admin.css">
 <link rel="stylesheet" href="ztree/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="js/jQuery.min.js"></script>
 <script type="text/javascript" src="js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
 </head>
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
@@ -54,22 +55,62 @@
 				</ul>
 			</div>
 		</div>
-
+		<script type="text/javascript" src="../utf8-jsp/ueditor.config.js"></script>
+		<script type="text/javascript" src="../utf8-jsp/ueditor.all.min.js"></script>
+		<script type="text/javascript" src="../utf8-jsp/lang/zh-cn/zh-cn.js"></script>
 		<div class="layui-body">
 			<div class="container" style="margin-top: 20px;">
 				<h1 style="height: 200px; line-height: 200px; text-align: center;">欢迎进入博客系统后台管理系统！</h1>
-				<ul class="ztree" id="ztree" style="width:350px;height:350px;margin:0 auto"></ul>
+				<ul class="ztree" id="ztree"
+					style="width: 350px; height: 350px; margin: 0 auto"></ul>
 				<!-- html页面内容编写区域  start -->
-				
+
 
 
 				<!-- html页面内容编写区域  end -->
-
-
-
 			</div>
 		</div>
-<script type="text/x-handlebars-template" id="categoryVTemplate">
+		//博客一级分类显示
+		<script type="text/x-handlebars-template" id="CategoryNavTemplate">
+		<label>博客一级分类:</label>
+					   <select multiple name="categorynavid" class="form-control categoryNavSelect" style="width:150px">
+					{{#each list}}
+                       	<option value="{{categorynavId}}">{{categorynavName}}</option>
+					{{/each}}
+					   </select>
+				<label>博客二级分类:</label><select name="categoryvid" multiple class="form-control categoryVSelect" style="width:150px">
+                       					 <option>暂无分类</option>
+					                  </select>
+		</script>
+		<script type="text/x-handlebars-template" id="blogAddTemplate">
+			<form id="blogFormAjax" method="post" style="margin:0 auto;width:85%">
+				<div class="form-group">
+    				<label for="exampleInputEmail1">博客标题</label>
+    				<input name="blogTitle" type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+  			    </div>
+				<textarea id="editor" name="blogContent"></textarea>	<br>
+				<div class="row form-inline" id="markPageArea"></div><br/>
+				<div class="row">
+				<div class="form-inline categoryArea">
+				
+ 				</div>
+ 				</div>
+				<br/>
+				<div class="row">
+					<div class="form-group">
+    					<label>博客状态：</label><label class="radio-inline">
+ 							 <input type="radio" name="blogStatus" id="inlineRadio1" value="1"> 启用
+						</label>
+						<label class="radio-inline">
+  							<input type="radio" name="blogStatus" id="inlineRadio2" value="0">  禁用
+						</label>
+  			    	</div>
+				</div>
+				<input type="submit" value="保存博客" class="btn btn-success blogAddSubmit"/>
+				<button type="button" class="btn btn-danger">返回首页</button>
+			</form>
+		</script>
+		<script type="text/x-handlebars-template" id="categoryVTemplate">
 	<div class="categoryv_list">
 			<div class="categoryv_list">
 			<h2>二级分类管理</h2>
@@ -225,7 +266,72 @@
 	</div>
 	</script>
 
-	//博客标签管理栏目
+
+	//博客管理列表
+	<script type="text/x-handlebars-template" id="blogTemplate">
+	<div class="categorynav_list">
+			<h2>博客管理</h2>
+<p style="text-indent:4em;"><button class="layui-btn layui-btn-sm layui-btn-warm blog_add_btn">编写博客</button></p>
+			<table width="100%" border="1" >
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>ID</th>
+						<th>ORDER</th>
+						<th colspan="1">TITLE</th>
+						<th>STATUS</th>
+						<th>CTIME</th>
+						<th>OPERATION</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each list}}
+					<tr>
+						<td>{{myCount @index}}</td>
+						<td id="blogId">{{blogId}}</td>
+						<td>{{blogNo}}</td>
+						<td id="blogTitle" style="width:250px">{{blogTitle}}</td>
+						<td>{{fmtStatus blogStatus}}</td>
+						<td>{{format_comment_content_ctime_helper blogCtime}}</td>
+						<td style="width:90px">
+							<button class="layui-btn layui-btn-sm layui-btn-normal blog_del_btn" id="{{blogId}}">删除</button>
+							<button class="layui-btn layui-btn-sm categorynav_edit_btn" id="{{blogId}}">编辑</button>
+							<button class="layui-btn layui-btn-sm layui-btn-danger categorynav_STATUS_btn" id="{{blogId}}-{{blogStatus}}">{{SwitchStatus blogStatus}}</button>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="7"><span>第{{pageNum}} / {{pages}} 页，共 {{total}} 记录</span>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn pageFirst" title="1">First</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn pagePrev" title="{{beforePageNum pageNum}}">Prev</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn  pageNext" title="{{nextPageNum pageNum}}">Next</a>
+								<a href="JavaScript:void(0);" class="button button-primary button-pill button-small pageNumBtn  pageLast" title="{{pages}}">Last</a>
+							</td>
+	</tr>
+	</tfoot>
+	</table>
+	</div>
+	</script>
+
+
+
+
+	<script type="text/x-handlebars-template" id="markPageTemplate">	
+		<label>博客标签：</label>
+				<div class="checkbox">
+					<a title="{{beforePageNum pageNum}}" class="btn btn-primary btn-xs active markPageBtn" role="button" style='text-decoration:none' href='JavaScript:void(0)'>上一页</a>
+					{{#each list}}
+						<label>
+      						<input type="checkbox" class="markIdsCheckBox" name="blogMarkId" value="{{markId}}">  {{markName}}
+    					</label>
+					{{/each}}
+				<a title="{{nextPageNum pageNum}}" class="btn btn-primary btn-xs active markPageBtn" role="button" style='text-decoration:none' href='JavaScript:void(0)'>下一页</a>&nbsp;
+				<a title="{{pages}}" class="btn btn-primary btn-xs active markPageBtn" role="button" style='text-decoration:none' href='JavaScript:void(0)'>尾页</a>
+  		</div>
+	</script>
+	
 	<script type="text/x-handlebars-template" id="blogmarktemplate">
 	<div class="blogmark_list">
 			<h2>博客标签管理</h2>
@@ -276,6 +382,7 @@
 	<script src="js/jquery.form.min.js"></script>
 	<script src="layui/layui.all.js"></script>
 	<script src="js/admin.js"></script>
+	<script src="js/blogAdd.js"></script>
 	<script src="js/admin-ztree.js"></script>
 	<script>
 		//JavaScript代码区域

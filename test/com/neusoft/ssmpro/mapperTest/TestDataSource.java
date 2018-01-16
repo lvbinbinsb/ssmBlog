@@ -61,6 +61,18 @@ public class TestDataSource {
 	@Autowired
 	private CommentContentMapper ccMapper;
 	
+	@Test
+	public void addBlog() {
+		Blog blog=new Blog();
+		blog.setBlogTitle("这是一条测试博客");
+		blog.setBlogStatus("1");
+		blog.setBlogContent("xixixiix");
+		blog.setCategorynavid(2);
+		blog.setCategoryvid(4);
+		int result = blogMapper.insert(blog);
+		System.out.println(result+",结果Id为"+blog.getBlogId());
+	}
+	
 	
 	@Test
 	public void testNode() {

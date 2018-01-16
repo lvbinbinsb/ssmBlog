@@ -66,5 +66,35 @@ public class BlogServiceImpl implements BlogService{
 		return blogMapper.loadBlogByMoreCondition(map);
 	}
 
+	@Override
+	public List<Blog> getAllBlog() {
+		return blogMapper.getAllBlog();
+	}
+
+
+	@Override
+	public boolean switchStatus(Long blogId, String status) {
+		return blogMapper.switchStatus(blogId,status)>0?true:false;
+	}
+
+	@Override
+	public boolean deleteBlog(Long blogId) {
+		return blogMapper.deleteByPrimaryKey(blogId.intValue())>0?true:false;
+	}
+
+	@Override
+	public boolean insertBlog(Blog blog) {
+		boolean flag=blogMapper.insert(blog)>0?true:false;
+		//更新博客
+		int result = blogMapper.updateBlogNo(blog);
+		boolean flag2=result>0?true:false;
+		return flag&&flag2;
+	}
+
+	@Override
+	public Blog loadBlogById(long blogId) {
+		return blogMapper.selectByPrimaryKey(Integer.parseInt(blogId+""));
+	}
+
 
 }

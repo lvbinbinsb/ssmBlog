@@ -1,8 +1,9 @@
 package com.neusoft.ssmpro.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Mark {
+public class Mark implements Serializable{
     private Integer markId;
 
     private String markName;

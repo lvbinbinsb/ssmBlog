@@ -86,6 +86,13 @@
 		by categoryv_no limit 0,5
 	</select>
 
+	<select id="loadAllCategoryVByNavId" resultType="CategoryV">
+		select * from
+		tbl_category_v where categorynavid=#{id} and
+		categoryv_status=1 order
+		by categoryv_no
+	</select>
+
 	<select id="listbypage" resultType="CategoryV">
 		select * from tbl_category_v where categorynavid=#{id} order by categoryv_id desc 
 	</select> 

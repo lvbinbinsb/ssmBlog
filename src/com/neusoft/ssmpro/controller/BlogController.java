@@ -48,6 +48,14 @@ public class BlogController {
 		return info;
 	}
 	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public PageInfo<Blog> showlist(@RequestParam(value = "pn", defaultValue = "1") Integer pn){
+		PageHelper.startPage(pn, 6);
+		List<Blog> list=blogService.getAllBlog();
+		PageInfo<Blog> info=new PageInfo<Blog>(list,5);
+		return info;
+	}
+	
 	@RequestMapping(value="/getHomePage",method = RequestMethod.GET)
 	public PageInfo getHomePage(){
 		PageHelper.startPage(1, 3);
@@ -111,10 +119,29 @@ public class BlogController {
 			blogService.updateBlog(map);
 		}
 	}
+	
+	@RequestMapping(value = "/switch/{blogId}", method = RequestMethod.POST)
+	public boolean switchStatusById(@PathVariable("blogId")Long blogId,@RequestParam("status")String status) {
+		if(status!=null&&status.equals("1")) {
+			status="0";
+		}else if(status!=null&&status.equals("0")) {
+			status="1";
+		}
+		blogService.switchStatus(blogId,status);
+		return true;
+	}
+	
 	@RequestMapping(value="/top3hot",method= {RequestMethod.GET,RequestMethod.POST})
 	public List<Blog> getTop3HotBlog(){
 		return blogService.getTop3HotBlog();
 	}
+	
+	@RequestMapping(value="/delete/{blogId}",method= RequestMethod.GET)
+	public boolean deleteBlog(@PathVariable("blogId")Long blogId) {
+		boolean flag=blogService.deleteBlog(blogId);
+		return flag;
+	}
+	
 	
 	// checkIp
 	private String getIpAddr(HttpServletRequest request) {

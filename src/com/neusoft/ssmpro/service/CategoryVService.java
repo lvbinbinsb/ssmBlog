@@ -22,4 +22,6 @@ public interface CategoryVService {
 	ZtreeVo insertNode(ZtreeVo newNode);
 	
 	boolean changeCategoryNav(ZtreeVo newNode);
+
+	List<CategoryV> loadAllByNavId(Integer navId);
 }

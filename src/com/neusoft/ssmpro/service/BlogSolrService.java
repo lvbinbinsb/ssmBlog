@@ -7,4 +7,7 @@ public interface BlogSolrService {
 
 	void loadBlogSolrByPage(String keyWord, Integer pn, Integer pageSize, PageInfo<Blog> pageInfo);
 
+	void buildIndexAfterAddBlog(Blog blog);
+	
+	
 }

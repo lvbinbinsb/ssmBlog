@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.neusoft.ssmpro.entity.Blog;
+import com.neusoft.ssmpro.mapper.BlogMapper;
 import com.neusoft.ssmpro.service.BlogCommentService;
 import com.neusoft.ssmpro.service.BlogService;
 import com.neusoft.ssmpro.service.BlogSolrService;
@@ -23,6 +25,9 @@ import com.neusoft.ssmpro.ztree.ZtreeVo;
 @ContextConfiguration(locations= {"classpath:spring.xml","classpath:spring-mvc.xml","classpath:spring-solr.xml"})
 public class TestService {
 	@Autowired
+	private BlogMapper blogMapper;
+	
+	@Autowired
 	private BlogService blogService;
 	
 	@Autowired
@@ -33,6 +38,15 @@ public class TestService {
 	
 	@Autowired
 	private CategoryVService CategoryVService;
+	
+	@Test
+	public void testBuildIndex() {
+		Blog blog = blogMapper.selectByPrimaryKey(29);
+		solrService.buildIndexAfterAddBlog(blog);
+		
+	}
+	
+	
 	
 	@Test
 	public void test3() {

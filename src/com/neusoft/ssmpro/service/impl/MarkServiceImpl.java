@@ -43,5 +43,13 @@ public class MarkServiceImpl implements MarkService{
 		}
 		return markMapper.switchstatus(mark);
 	}
+	
+	
+	public boolean updateBlogAndMark(List<Integer> markIds,Long blogId) {
+		for (Integer id : markIds) {
+			markMapper.insertMarkBlog(id,blogId);
+		}
+		return true;
+	}
 
 }

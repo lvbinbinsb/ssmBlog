@@ -49,6 +49,8 @@ public interface CategoryVMapper {
     
     List<CategoryV> loadCategoryVByNavId(Integer cateNavId);
     
+    List<CategoryV> loadAllCategoryVByNavId(Integer cateNavId);
+    
     List<Integer> loadFirstNavVIds();
 
 	List<CategoryV> listbypage(Integer categorynavId);

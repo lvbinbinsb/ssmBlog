@@ -34,5 +34,14 @@ public interface BlogService {
 
 	List<Blog> loadBlogAndMarkByMoreCondition(Map<String, Object> map);
 
+	List<Blog> getAllBlog();
+
+	boolean switchStatus(Long blogId, String status);
+
+	boolean deleteBlog(Long blogId);
+
+	boolean insertBlog(Blog blog);
+	
+	Blog loadBlogById(long blogId);
 	
 }

@@ -65,4 +65,8 @@
 	<update id="switchstatus">
 		update tbl_mark set mark_status=#{markStatus} where mark_id=#{markId}
 	</update>
+	
+	<insert id="insertMarkBlog">
+		insert into tbl_mark_blog (mark_id ,blog_id) values (#{markId},#{blogId})
+	</insert>
 </mapper>

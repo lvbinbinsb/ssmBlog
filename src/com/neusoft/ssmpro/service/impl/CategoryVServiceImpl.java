@@ -65,4 +65,10 @@ public class CategoryVServiceImpl implements CategoryVService{
 		return categoryVMapper.changeCategoryNav(newNode)>0?true:false;
 	}
 
+	@Override
+	public List<CategoryV> loadAllByNavId(Integer navId) {
+		// TODO Auto-generated method stub
+		return categoryVMapper.loadAllCategoryVByNavId(navId);
+	}
+
 }
