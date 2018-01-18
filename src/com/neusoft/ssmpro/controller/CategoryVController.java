@@ -1,9 +1,14 @@
 package com.neusoft.ssmpro.controller;
 
-import java.io.Console;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +19,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.ssmpro.entity.CategoryV;
 import com.neusoft.ssmpro.service.CategoryVService;
+import com.neusoft.ssmpro.vo.MSG;
 import com.neusoft.ssmpro.ztree.ZtreeVo;
 
 @RestController
@@ -63,9 +69,17 @@ public class CategoryVController {
 	}
 	
 	@RequestMapping(value="/addNode",method=RequestMethod.POST)
-	public ZtreeVo  addNode(ZtreeVo newNode) {
+	public MSG  addNode(@Validated ZtreeVo newNode,BindingResult result) {
+		List<ObjectError> errors = result.getAllErrors();
+		Map<String,String> errorInfos=new HashMap<String,String>();
+		if(errors!=null&&errors.size()>0) {
+		for (ObjectError objectError : errors) {
+				errorInfos.put(objectError.getObjectName(),objectError.getDefaultMessage());
+			}
+		return MSG.fail().add("errors",errorInfos );
+		}
 		newNode=categoryVService.insertNode(newNode);
-		return newNode;
+		return MSG.Success().add("newNode", newNode);
 	}
 	
 	@RequestMapping(value="/changeCategoryNav",method=RequestMethod.POST)

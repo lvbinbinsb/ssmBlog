@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,7 @@ public class GlobalController {
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
+	@RequiresRoles(value= {"superAdmin"})
 	public Boolean updateBlog(Global global,HttpServletRequest request) {
 		return globalService.updateGlobal(global);	
 	}

@@ -58,6 +58,10 @@
 		select * from tbl_mark order by mark_ctime desc
 	</select>
 	
+	<update id="deleteRelation">
+		delete  from  tbl_mark_blog where blog_id=#{blogId} 
+	</update>
+	
 	<insert id="addMark">
 		insert into tbl_mark (mark_name) values (#{markName})
 	</insert>
@@ -69,4 +73,8 @@
 	<insert id="insertMarkBlog">
 		insert into tbl_mark_blog (mark_id ,blog_id) values (#{markId},#{blogId})
 	</insert>
+	
+	<update id="editMark">
+		update tbl_mark set mark_name=#{markName} where mark_id=#{markId}
+	</update>
 </mapper>

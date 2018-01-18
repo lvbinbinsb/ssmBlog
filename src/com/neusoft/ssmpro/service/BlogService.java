@@ -43,5 +43,9 @@ public interface BlogService {
 	boolean insertBlog(Blog blog);
 	
 	Blog loadBlogById(long blogId);
+
+	boolean editBlog(Blog blog);
+
+	boolean addBlogDemo(Blog blog);
 	
 }

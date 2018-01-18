@@ -49,7 +49,7 @@ function onDrop(event, treeId, treeNodes, targetNode, moveType) {
 	   },
 	   dataType:'json',
 	   success:function(data){
-		   console.log(data);
+		   //console.log(data);
 		   if(data==true){
 			   layer.msg("操作成功");
 		   }
@@ -94,7 +94,7 @@ function removeHoverDom(treeId, treeNode) {
 
 function onRename() {
 	var node = zTreeObj.getSelectedNodes();
-//	console.log(node[0].name);
+//	//console.log(node[0].name);
 	if(node[0].id!=undefined){
 	$.ajax({
 		url : path + 'categoryV/updateNode',
@@ -121,13 +121,25 @@ function onRename() {
 			},
 			dataType:'json',
 			success : function(data) {
+				//console.log(data);
 				//返回之后更新节点id以及pid
-				console.log(data);
-				node[0].id=data.id;
-				node[0].name=data.name;
-				node[0].isParent=data.isParent;
-				node[0].open=data.open;
+				if(data.code==200){
+					//console.log(data);
+				obj=data.result.newNode;
+//				//console.log(data);
+				node[0].id=obj.id;
+				node[0].name=obj.name;
+				node[0].isParent=obj.isParent;
+				node[0].open=obj.open;
 				$.fn.zTree.getZTreeObj("ztree").updateNode(node[0]);
+				}else if(data.code==100){
+					//console.log(data);
+//					$.each(data.map.errors,function(index,result){
+//						layer.msg();
+//					});
+					layer.msg(data.result.errors["ztreeVo"]);
+					$.fn.zTree.getZTreeObj("ztree").removeNode(node[0]);
+				}
 			}
 		});
 	}
@@ -178,14 +190,14 @@ $(function() {
 							},
 							dataType : 'json',
 							success : function(data) {
-//								console.log(data);
+//								//console.log(data);
 								var zNodes = data;
 								for(var i=0;i<zNodes.length;i++){
 									if(zNodes[i].pid==0){
 										zNodes[i].drag=false;
 									}
 								}
-								console.log(zNodes);
+								//console.log(zNodes);
 								$.fn.zTree.init($("#ztree"), setting, zNodes);
 								zTreeObj = $.fn.zTree.getZTreeObj("ztree");
 								setEdit();

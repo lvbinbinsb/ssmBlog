@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 自定义拦截器 -->
+	<!-- <bean id="myAuthcFilter" class="com.neusoft.ssmpro.shiro.KaptchaFormAuthenticationFilter"> 
+		<property name="usernameParam" value="userName"/> <property name="passwordParam" 
+		value="userPassword"/> </bean> -->
+	<!-- ShiroSpringCache -->
+	
+
+	<bean id="passwordHash" class="com.neusoft.ssmpro.shiro.PasswordHash">
+		<property name="algorithmName" value="MD5" />
+		<property name="hashIterations" value="2" />
+	</bean>
+
+	<bean id="myRealm" class="com.neusoft.ssmpro.shiro.MyRealm">
+		<property name="credentialsMatcher" ref="customCreidentialMatcher" />
+	</bean>
+
+	<bean id="customCreidentialMatcher" class="com.neusoft.ssmpro.shiro.CustomCreidentialMatcher">
+		<constructor-arg index="0" ref="cacheManager"/>
+		<property name="passwordHash" ref="passwordHash"></property>
+	</bean>
+
+	<!-- <property name="filters"> <map> <entry key="myFilter" value-ref="myAuthcFilter"/> 
+		</map> </property> -->
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 装配 securityManager -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 配置登陆页面 -->
+		<property name="loginUrl" value="/login/login.html" />
+		<!-- 登陆成功后的一面 -->
+		<property name="successUrl" value="/admin/index.html" />
+		<!--  没有权限的页面-->
+		<!-- <property name="unauthorizedUrl" value="/errorPage/401/401.html"/> -->
+		<!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截. -->
+		<property name="filterChainDefinitions">
+			<value>
+				/errorPage/**=anon
+				/css/**=anon
+				/img/**=anon
+				/js/**=anon
+				/layui/**=anon
+				/utf8-jsp/**=anon
+				/praise/**=anon
+				/syntaxhighlighter/**=anon
+				/admin/css/**=anon
+				/admin/js/**=anon
+				/admin/img/**=anon
+				/admin/layui/**=anon
+				/admin/ztree/**=anon
+				/login/images/**=anon
+				/login/js/**=anon
+				/login/style/**=anon
+				/index.html=anon
+				/login=anon
+				/register=anon
+				/detail.html=anon
+				/**/list*=anon
+				/logout = logout
+				/login/login.html=anon
+				/login/register.html=anon
+				/kaptcha.jpg=anon
+				/global/update=authc
+				/global/**=anon
+				/categoryV/*Node=authc
+				/categoryV/**=anon
+				/blog/**=anon
+				/mark/**=anon
+				/blogComment/**=anon
+				/admin/index.html=authc
+				/admin/addPage.html=authc
+				/checkUserName=anon
+				/getCurUserName=authc
+				/**=authc
+			</value>
+		</property>
+	</bean>
+	
+<!-- <property name="cacheManager" ref="shiroSpringCacheManager"/> -->
+
+	<!-- 配置 Shiro 的 SecurityManager Bean. -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="myRealm" />
+		<property name="cacheManager" ref="cacheManager"/>
+	</bean>
+
+	<!-- Ehcache -->
+	<bean id="ehCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache.xml" />
+		<property name="shared" value="true" />
+	</bean>
+
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="ehCacheManager" />
+	</bean>
+
+	<!-- 配置 Bean 后置处理器: 会自动的调用和 Spring 整合后各个组件的生命周期方法. -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+
+</beans>

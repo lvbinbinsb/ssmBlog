@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache updateCheck="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://ehcache.sf.net/ehcache.xsd">
+	xsi:noNamespaceSchemaLocation="http://ehcache.sf.net/ehcache.xsd">
 	<!-- 参数说明： -->
-	<!-- 
-		(1)maxElementsInMemory：内存缓存中最对可以存放的元素数量，若放入Cache中的元素超过这个数值，则有以下两种情况。
-			若overflowToDisk=true,则将Cache中多出的元素放入磁盘文件中。
-			若overflowToDisk=false,则根据memoryStoreEvictionPolicy策略替换Cache中原有的元素。
-		(2)maxElementsOnDisk:磁盘缓存中最多可以存放的元素数量，0表示无穷大
-		(3)name:缓存名称，cache的唯一标识（ehcache会把这个cache放到HashMap中）
-		(4)<diskStore>:当内存缓存中数量超过maxElementsInMemory时，将缓存对象放到磁盘缓存中(需要该对象实现序列化接口)
-		(5)<diskStore path="">:用来配置磁盘缓存使用的物理路径，Ehcache磁盘缓存使用的文件后缀名是*.data和*.index
-		(6)Eternal:缓存中对象是否永久有效，即是否永驻内存，true时将忽略timeToIdleSeconds和timeToLiveSeconds
-		(7)timeToIdleSeconds:缓存数据在失效前的允许闲置时间（单位：s）,仅当eternal=false时使用，默认值是0表示可闲置时间无穷大，为可选属性，即访问这个Cache中元素的最大间隔时间，若超过这个时间没有访问此Cache中的某个元素，那么此元素将被从Cache中清除
-		(8)timeToLiveSeconds:缓存数据在失效前的允许存活时间（单位：s）,仅当eternal=false时使用，默认值是0表示可闲置时间无穷大，为可选属性,即Cache中某元素从创建到清除的生存时间。
-		(9)overflowToDisk:内存不足时，是否启用磁盘缓存
-		(10)diskPersistent:是否持久化磁盘缓存，当这个属性的值为true时，系统在初始化时会在磁盘中查找文件名为cache名称，后缀名为index的文件，若要把cache真正持久化磁盘，写程序时注意执行netnet.sf.ehcache.Cache.put(Element element)后要调用flush()方法
-		(11)diskExpiryThreadIntervalSeconds:磁盘缓存的清理线程运行间隔，默认是120s
-		(12)diskSpoolBufferSizeMB:设置DiskStore(磁盘缓存)的缓存区大小，默认是30MB
-		(13)memoryStoreEvictionPolicy:内存存储与释放策略，即达到maxElementsInMemory限制时，Ehcache会根据3中策略清理内存，分别为LRU(最近最少使用)，LFU(最常用的)，FIFO(先进先出)
-	 -->
-	 	<diskStore path="java.io.tmpdir" />
-	 	<defaultCache 
-	 		maxElementsInMemory="10000"
-	 		eternal="false"
-	 		timeToIdleSeconds="120"
-	 		timeToLiveSeconds="120"
-	 		maxElementsOnDisk="1000000"
-	 		diskExpiryThreadIntervalSeconds="120"
-	 		memoryStoreEvictionPolicy="LRU"
-	 	/>
-	 	
+	<!-- (1)maxElementsInMemory：内存缓存中最对可以存放的元素数量，若放入Cache中的元素超过这个数值，则有以下两种情况。 
+		若overflowToDisk=true,则将Cache中多出的元素放入磁盘文件中。 若overflowToDisk=false,则根据memoryStoreEvictionPolicy策略替换Cache中原有的元素。 
+		(2)maxElementsOnDisk:磁盘缓存中最多可以存放的元素数量，0表示无穷大 (3)name:缓存名称，cache的唯一标识（ehcache会把这个cache放到HashMap中） 
+		(4)<diskStore>:当内存缓存中数量超过maxElementsInMemory时，将缓存对象放到磁盘缓存中(需要该对象实现序列化接口) 
+		(5)<diskStore path="">:用来配置磁盘缓存使用的物理路径，Ehcache磁盘缓存使用的文件后缀名是*.data和*.index 
+		(6)Eternal:缓存中对象是否永久有效，即是否永驻内存，true时将忽略timeToIdleSeconds和timeToLiveSeconds 
+		(7)timeToIdleSeconds:缓存数据在失效前的允许闲置时间（单位：s）,仅当eternal=false时使用，默认值是0表示可闲置时间无穷大，为可选属性，即访问这个Cache中元素的最大间隔时间，若超过这个时间没有访问此Cache中的某个元素，那么此元素将被从Cache中清除 
+		(8)timeToLiveSeconds:缓存数据在失效前的允许存活时间（单位：s）,仅当eternal=false时使用，默认值是0表示可闲置时间无穷大，为可选属性,即Cache中某元素从创建到清除的生存时间。 
+		(9)overflowToDisk:内存不足时，是否启用磁盘缓存 (10)diskPersistent:是否持久化磁盘缓存，当这个属性的值为true时，系统在初始化时会在磁盘中查找文件名为cache名称，后缀名为index的文件，若要把cache真正持久化磁盘，写程序时注意执行netnet.sf.ehcache.Cache.put(Element 
+		element)后要调用flush()方法 (11)diskExpiryThreadIntervalSeconds:磁盘缓存的清理线程运行间隔，默认是120s 
+		(12)diskSpoolBufferSizeMB:设置DiskStore(磁盘缓存)的缓存区大小，默认是30MB (13)memoryStoreEvictionPolicy:内存存储与释放策略，即达到maxElementsInMemory限制时，Ehcache会根据3中策略清理内存，分别为LRU(最近最少使用)，LFU(最常用的)，FIFO(先进先出) -->
+	<diskStore path="java.io.tmpdir" />
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" maxElementsOnDisk="1000000"
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+
+	<cache name="threeHourCache" maxElementsInMemory="100"
+		timeToLiveSeconds="10800" eternal="false" overflowToDisk="false"
+		diskSpoolBufferSizeMB="30" maxElementsOnDisk="10000000"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" statistics="false" clearOnFlush="true" />
+	<cache name="oneHourCache" maxElementsInMemory="100"
+		timeToLiveSeconds="3600" eternal="false" overflowToDisk="false"
+		diskSpoolBufferSizeMB="30" maxElementsOnDisk="10000000"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" statistics="false" clearOnFlush="true" />
+	<cache name="fiveMinsCache" maxElementsInMemory="10000"
+		timeToLiveSeconds="300" eternal="false" overflowToDisk="false"
+		diskSpoolBufferSizeMB="30" maxElementsOnDisk="10000000"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" statistics="false" clearOnFlush="true" />
+
+	<!-- Shiro密码部分缓存 -->
+	<!-- 登录记录缓存 锁定30分钟 -->
+	<cache name="passwordRetryCache" maxEntriesLocalHeap="20000"
+		eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="0"
+		overflowToDisk="false" statistics="false">
+	</cache>
 </ehcache>

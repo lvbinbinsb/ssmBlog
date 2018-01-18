@@ -51,4 +51,9 @@ public class MarkController {
 	public boolean switchstatus(Mark mark) {
 		return markService.switchstatus(mark);
 	}
+	
+	@RequestMapping(value="/edit")
+	public boolean editMark(Mark mark) {
+		return markService.editMark(mark);
+	}
 }

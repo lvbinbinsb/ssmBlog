@@ -27,7 +27,7 @@ $(function() {
 		if (navId != 1) {
 			curNavId = navId;
 			init_categoryV(navId);
-			// console.log(index);
+			// //console.log(index);
 			init_blog(curNavId, navVarr[curIndex], 1);
 			$(".searchKeyWords").attr("placeholder","Search for...").val("");
 		} else {
@@ -58,7 +58,7 @@ $(function() {
 				$.cookie("blogId",blogId);
 //				setCookie("blogIds",serialize(blogIds),3);
 				$.cookie("blogIds",blogIds);
-//				console.log(blogIds);
+//				//console.log(blogIds);
 				$(this).attr("href",path + "detail.html?categoryNavId="+curNavId+"&categoryVId="+curVid);
 					
 			});
@@ -92,7 +92,7 @@ function init_result(keyWords,curPn){
 		},
 		dataType:'json',
 		success:function(data){
-			console.log(data);
+			//console.log(data);
 			$(".lg_blog_items").html("");
 			var blogsearchTemplate=Handlebars.compile($("#blogsearch-template").html());
 			$(".lg_blog_items").html(blogsearchTemplate(data));
@@ -114,7 +114,7 @@ function init_top3hot() {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			//console.log(data);
+			////console.log(data);
 			var top3HotTemplate = Handlebars.compile($("#top3HotTemplate")
 					.html());
 			$(".tophot3Area").html(top3HotTemplate(data));
@@ -129,7 +129,7 @@ function init_HomePage(){
 		url:path+'blog/getHomePage',
 		dataType:'json',
 		success:function(data){
-			 // console.log(data);
+			 // //console.log(data);
 			if (data.size == 0) {
 				$(".lg_blog_items").html(' ');
 				$(".lg_blog_items").append($("<div></div>").append("<h4>主人很懒,暂未留下任何痕迹</h4>"));
@@ -159,7 +159,7 @@ function init_HomePage(){
 					type : 'GET',
 					dataType : 'json',
 					success : function(data) {
-						// console.log(data);
+						// //console.log(data);
 						divObj.html("");
 						$.each(data,
 								function(index, data) {
@@ -187,7 +187,7 @@ function init_global() {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			// //console.log(data);
+			// ////console.log(data);
 			var htitle = Handlebars
 					.compile($('#global_htitle-template').html());
 			$('#global_htitle-area').html(htitle(data));
@@ -235,7 +235,7 @@ function init_categoryNav() {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			// //console.log(data);
+			// ////console.log(data);
 			var categoryNavHTML = Handlebars
 					.compile($('#category_nav-template').html());
 			$('.nav-pills').html(categoryNavHTML(data));
@@ -251,7 +251,7 @@ function init_categoryV(navId) {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			// //console.log(data);
+			// ////console.log(data);
 			var categoryVHTML = Handlebars.compile($('#categoryV-template')
 					.html());
 			$('.lg_list-group').html(categoryVHTML(data));
@@ -281,7 +281,7 @@ function init_blog(navId, Vid, pn) {
 				return;
 			}
 				
-			// console.log(data);
+			// //console.log(data);
 			blogIds=[];
 			$.each(data.list, function(index, data) {
 				blogIds.push(data.blogId);
@@ -292,7 +292,7 @@ function init_blog(navId, Vid, pn) {
 					data.blogContent = data.blogContent.substr(0, 180);
 				}
 			});
-//			console.log(blogIds);
+//			//console.log(blogIds);
 			var blogtemplate = Handlebars.compile($('#blog-template').html());
 			$(".lg_blog_items").html(blogtemplate(data));
 
@@ -309,7 +309,7 @@ function init_blog(navId, Vid, pn) {
 					type : 'GET',
 					dataType : 'json',
 					success : function(data) {
-						// console.log(data);
+						// //console.log(data);
 						divObj.html("");
 						$.each(data,
 								function(index, data) {
@@ -426,7 +426,7 @@ function getcategoryVid() {
 			$.each(data, function(index, data) {
 				navVarr.push(data);
 			});
-			// console.log(navVarr);
+			// //console.log(navVarr);
 		}
 
 	});

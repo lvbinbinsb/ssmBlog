@@ -1,6 +1,7 @@
 var path = "http://localhost/ssmBlog/";
 
 var curPn = 1, pages = 1;
+var ueRendered=false;
 
 $(function() {
 	Handlebars.registerHelper("format_comment_content_ctime_helper",
@@ -35,7 +36,7 @@ $(function() {
 	});
 
 	Handlebars.registerHelper("nextPageNum", function(index) {
-		//console.log();
+		////console.log();
 		if (index == pages) {
 			return pages;
 		} else {
@@ -109,6 +110,8 @@ $(function() {
 									setTimeout(
 											"window.location.href=window.location.href;",
 											1000)
+								}else{
+									window.location.href=path+"errorPage/401/401.html";
 								}
 							},
 						};
@@ -242,6 +245,30 @@ $(function() {
 		to_markPage(1);
 	});
 
+	
+	$(document).on('click','.blogmark_edit_btn',function(){
+		var markId=$(this).attr("id");
+		var name=$(this).parents("tr").children("td:eq(2)").text();
+		
+		layer.prompt({"value":name},function(value, index, elem) {
+			$.ajax({
+				type : 'post',
+				url : path + 'mark/edit',
+				data : {
+					"markName" : value,
+					"markId":markId
+				},
+				success : function(str) {
+					if (str == "true") {
+						layer.close(index);
+						// //重新查询所有的数据并展示在当前页面中
+						$("#nav_mark").trigger("click");
+					}
+				}
+			});
+		});
+	});
+	
 	// 标签添加栏
 	$(document).on('click', ".blogmark_add_btn", function() {
 		layer.prompt(function(value, index, elem) {
@@ -313,7 +340,7 @@ $(function() {
 					"click",
 					'#nav_categoryv',
 					function() {
-						var _html = '<div class="categoryv_list"><h2>二级分类管理</h2><p style="text-indent:4em"><select class="change_nav"><option>请选择一级分类名称：</option></select></p><table width="100%" border="1"><thead><tr><th>No.</th><th>ID</th><th>ORDER</th><th>NAME</th><th>STATUS</th><th>CITME</th><th>OPERATION</th></tr></thead><tbody><tr><td colspan="7"><p style="text-align:center">暂无数据，请先选择一个一级分类进行管理！^_^</p></td></tr></tbody></table></div>';
+						var _html = '<div class="categoryv_list" style="width:90%"><h2>二级分类管理</h2><p style="text-indent:4em"><select class="change_nav"><option>请选择一级分类名称：</option></select></p><table width="100%" border="1"><thead><tr><th>No.</th><th>ID</th><th>ORDER</th><th>NAME</th><th>STATUS</th><th>CITME</th><th>OPERATION</th></tr></thead><tbody><tr><td colspan="7"><p style="text-align:center">暂无数据，请先选择一个一级分类进行管理！^_^</p></td></tr></tbody></table></div>';
 						$(".container").html(_html);
 						getCategoryV(null);
 					});
@@ -329,7 +356,7 @@ $(function() {
 									},
 									dataType : 'json',
 									success : function(data) {
-										// console.log(data);
+										// //console.log(data);
 										if (data.list.length != 0) {
 											var categoryVTemplate = Handlebars.compile($("#categoryVTemplate").html());
 											// 模板渲染数据
@@ -338,7 +365,7 @@ $(function() {
 													categoryVTemplate(data));
 										} else {
 											$(".container").empty();
-											var _html = '<div class="categoryv_list"><h2>二级分类管理</h2><p style="text-indent:4em"><select class="change_nav"><option>请选择一级分类名称：</option></select></p><table width="100%" border="1"><thead><tr><th>No.</th><th>ID</th><th>ORDER</th><th>NAME</th><th>STATUS</th><th>CITME</th><th>OPERATION</th></tr></thead><tbody><tr><td colspan="7"><p style="text-align:center">暂无数据，请先选择一个一级分类进行管理！^_^</p></td></tr></tbody></table></div>';
+											var _html = '<div class="categoryv_list" style="width:90%"><h2>二级分类管理</h2><p style="text-indent:4em"><select class="change_nav"><option>请选择一级分类名称：</option></select></p><table width="100%" border="1"><thead><tr><th>No.</th><th>ID</th><th>ORDER</th><th>NAME</th><th>STATUS</th><th>CITME</th><th>OPERATION</th></tr></thead><tbody><tr><td colspan="7"><p style="text-align:center">暂无数据，请先选择一个一级分类进行管理！^_^</p></td></tr></tbody></table></div>';
 											$(".container").html(_html);
 										}
 										getCategoryV(categorynav_id);
@@ -355,6 +382,9 @@ $(function() {
 		toblogPage(1);
 	});
 	
+	$(document).on('click',".categoryNavpageNumBtn",function(){
+		to_page($(this).attr("title"));
+	});	
 });
 
 var markList=new Array();
@@ -373,11 +403,17 @@ function toblogPage(pn){
 			pages=data.pages;
 			var blogTemplate = Handlebars.compile($("#blogTemplate").html());
 			$(".container").html(blogTemplate(data));
+			$(".blog_add_btn").css({"display":"block"});
 			$(document).on("click",".blog_add_btn",function(){
 				$(".container").html("");
 				var blogAddTemplate = Handlebars.compile($("#blogAddTemplate").html());
 				$(".container").html(blogAddTemplate());
-				var ue = UE.getEditor('editor');
+				ue=UE.getEditor('editor');
+				if(ueRendered){
+					ue.render('editor');
+				}
+				ueRendered=true;
+//				UE.getEditor('editor').render('editor')
 				showMarks(1);
 				showCategory();
 			});
@@ -451,7 +487,7 @@ function to_page(pn) {
 		},
 		dataType : 'json',
 		success : function(data) {
-			// console.log(data);
+			// //console.log(data);
 			curPn = data.pageNum;
 			pages = data.pages;
 			// 定义一个helper 实现在index基础上从1开始
@@ -463,7 +499,8 @@ function to_page(pn) {
 			// dom操作
 			$(".container").empty();
 			$(".container").append(_html);
-
+			
+			
 		},
 		error : function() {
 			layer.msg("服务器有异常，请稍后再试！");
@@ -480,7 +517,7 @@ function to_markPage(pn) {
 		},
 		dataType : 'json',
 		success : function(data) {
-			// console.log(data);
+			// //console.log(data);
 			curPn = data.page;
 			pages = data.pages;
 			var markTemplate = Handlebars

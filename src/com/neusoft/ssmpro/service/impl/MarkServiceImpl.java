@@ -52,4 +52,18 @@ public class MarkServiceImpl implements MarkService{
 		return true;
 	}
 
+	@Override
+	public boolean removeAndAddRelation(Integer blogId, List<Integer> markIds) {
+		int result = markMapper.deleteRelation(blogId);
+		for (Integer markId : markIds) {
+			markMapper.insertMarkBlog(markId, blogId.longValue());
+		}
+		return true;
+	}
+
+	@Override
+	public boolean editMark(Mark mark) {
+		return markMapper.editMark(mark);
+	}
+
 }

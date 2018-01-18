@@ -161,6 +161,12 @@
 		from tbl_blog
 	</select>
 
+	<update id="editBlog">
+		update tbl_blog set blog_title =#{blogTitle} , blog_content=#{blogContent} ,blog_status=#{blogStatus},
+		 categorynavid=#{categorynavid} ,categoryvid=#{categoryvid}
+		where blog_id =#{blogId}
+	</update>
+
 	<select id="getAllBlog" resultType="blog">
 		select * from tbl_blog order by blog_id desc
 	</select>
@@ -216,4 +222,8 @@
 		update tbl_blog set blog_status=#{status} where
 		blog_id=#{blogId}
 	</update>
+	
+	<insert id="addBlogDemo">
+		insert into tbl_blog (blog_title,blog_content) values ( #{blogTitle}, #{blogContent})
+	</insert>
 </mapper>

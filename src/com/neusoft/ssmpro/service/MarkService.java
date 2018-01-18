@@ -17,4 +17,8 @@ public interface MarkService {
 	boolean switchstatus(Mark mark);
 
 	boolean updateBlogAndMark(List<Integer> markIds,Long blogId);
+
+	boolean removeAndAddRelation(Integer blogId, List<Integer> markIds);
+
+	boolean editMark(Mark mark);
 }

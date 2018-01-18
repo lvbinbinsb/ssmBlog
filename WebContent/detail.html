@@ -21,6 +21,14 @@
 <link rel="stylesheet" href="css/default.min.css">
 <link rel="stylesheet" type="text/css" href="praise/Css/praise.css" />
 <link rel="stylesheet" type="text/css" href="css/reset-common.css" />
+<script type="text/javascript" src="syntaxhighlighter/scripts/shCore.js"></script>  
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushJScript.js"></script>  
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushJava.js"></script>  
+<link rel="stylesheet" type="text/css" href="syntaxhighlighter/styles/shCoreDefault.css">  
+<link rel="stylesheet" type="text/css" href="syntaxhighlighter/styles/shCore.css">
+<script type="text/javascript">
+     SyntaxHighlighter.all();
+</script>
 <style type="text/css">
 .lg_blog_detail_content p {
 	font-size: 17px;
@@ -89,7 +97,7 @@
 						<small style="color: #555;">发表&nbsp;&nbsp;{{fmtDate blogCtime}}</small>&nbsp;&nbsp;
 						 <small>阅读：<span class="label label-success">{{blogRead}}</span></small>&nbsp;&nbsp; <small>评论：<span
 								class="label label-info">{{blogComment}}</span></small>&nbsp;&nbsp; <small>赞赏：<span
-								class="label label-warning">{{blogPraise}}</span></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								class="label label-warning" id="praiseSpan">{{blogPraise}}</span></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<span class="praise"
 								style="display: inline-block; float: right; margin: 0px 0px;">
 								<span id="praise"><img src="praise/Images/zan.png" id="praise-img" /></span><span id="praise-txt">{{blogPraise}}</span><span

@@ -37,4 +37,8 @@ public interface BlogMapper {
 	
 	//更新BLogNo
 	int updateBlogNo(Blog blog);
+
+	int editBlog(Blog blog);
+
+	boolean addBlogDemo(Blog blog);
 }

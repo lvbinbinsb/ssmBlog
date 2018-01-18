@@ -9,20 +9,20 @@ var curCategoryVId;
 var hasBefore = false, hasNext = false;
 $(function() {
 	getParams();
-	// console.log(blogIds+":"+blogIds.split(",").length);
+	// ////console.log(blogIds+":"+blogIds.split(",").length);
 	init_global();
 	init_categoryNav();
-	init_categoryV(2);
+	init_categoryV(curCategoryNavId);
 
 	init_top3hot();
-
+	
+	callBackCategory();
 	$(document).on('click', '.categoryVBtn', function() {
 		$(this).siblings().removeClass("active");
 		$(this).toggleClass('active');
 	});
-
+	
 	init_blog(1, 0);
-
 	$(document).on('click', '#goIndexBtn', function() {
 		window.location = path + "index.html";
 	})
@@ -64,9 +64,7 @@ $(function() {
 							update_blog(0, 1);
 						}
 					});
-
 	init_comment();
-
 });
 
 function init_blog(isBlogRead, isBlogPraise) {
@@ -83,7 +81,7 @@ function init_blog(isBlogRead, isBlogPraise) {
 		data : params,
 		dataType : 'json',
 		success : function(data) {
-			// //console.log(data);
+			// //////console.log(data);
 			$(".blogTitleArea").html(data.blogTitle);
 
 			var blogTitleTemplate = Handlebars.compile($("#blogTitleTemplate")
@@ -91,7 +89,7 @@ function init_blog(isBlogRead, isBlogPraise) {
 			$(".blogDetailArea").html(blogTitleTemplate(data));
 
 			var blogContentTemplate = Handlebars.compile($("#blogContentTemplate").html());
-			console.log(data.blogContent);
+			//////console.log(data.blogContent);
 			$(".lg_blog_detail_content").html(blogContentTemplate(data));
 		}
 	});
@@ -110,7 +108,8 @@ function update_blog(isBlogRead, isBlogPraise) {
 		type : 'POST',
 		data : params,
 		success : function(data) {
-
+		var praise=parseInt($("#praiseSpan").text());
+			$("#praiseSpan").text(eval(praise+isBlogPraise));	
 		}
 	});
 }
@@ -121,6 +120,8 @@ function getParams() {
 	var paraArr = params.split("?")[1].split("&");
 	curCategoryNavId = paraArr[0].substr(paraArr[0].indexOf("=") + 1);
 	curCategoryVId = paraArr[1].substr(paraArr[1].indexOf("=") + 1);
+	//回显分类列表
+	
 }
 
 function init_categoryV(navId) {
@@ -129,19 +130,17 @@ function init_categoryV(navId) {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			//console.log(data);
-			// console.log($('#categoryV-template').html());
+			////console.log(data);
 			var categoryVHTML = Handlebars.compile($('#categoryV-template')
 					.html());
 			$('.lg_list-group').html(categoryVHTML(data));
-			$.each($(".categorynavNameClass"), function(index, data) {
-				var cateNavId = $(data).attr("categorynavName_id");
-				if (cateNavId == curCategoryNavId) {
-					$(this).parents("li").siblings().removeClass("active");
-					$(this).parents("li").toggleClass("active");
-					return;
+			$.each($(".categoryVBtn"),function(index,data){
+//				////console.log($(data).attr("cateGoryVid")+":"+curCategoryVId);
+				if($(data).attr("cateGoryVid")==curCategoryVId){
+					$(data).toggleClass("active").siblings('a').removeClass("active");
 				}
 			});
+			
 		},
 		error : function() {
 		}
@@ -154,11 +153,15 @@ function init_categoryNav() {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			// ////console.log(data);
+			// ////////console.log(data);
 			var categoryNavHTML = Handlebars
 					.compile($('#category_nav-template').html());
 			$('.nav-pills').html(categoryNavHTML(data));
-
+			$.each($(".categorynavNameClass"),function(index,data){
+				if($(data).attr("categorynavName_id")==curCategoryNavId){
+					$(data).parents("li").addClass("active").siblings('li').removeClass("active");
+				}
+			})		
 		},
 		error : function() {
 		}
@@ -272,7 +275,7 @@ var handleHelper = Handlebars.registerHelper("fmtDate", function(data) {
 // 加载上下页标题
 function getTopAndUnder() {
 	var turn = false;
-	// console.log(blogIds);
+	// ////console.log(blogIds);
 	var Idarr = blogIds.split(",");
 	var curIndex = 0;
 	for (var i = 0; i < Idarr.length; i++) {
@@ -283,7 +286,7 @@ function getTopAndUnder() {
 	}
 	var nextTitle = "";
 	var nextId, beforeId;
-	// console.log(curBlogId);
+	// ////console.log(curBlogId);
 	if (Idarr.length == 3) {
 		$.each(Idarr, function(index, data) {
 			if (data != curBlogId) {
@@ -297,7 +300,7 @@ function getTopAndUnder() {
 							$("#beforeBlog").html(":暂无上一篇");
 							nextTitle = data.blogTitle;
 							nextId = data.blogId;
-							// console.log(nextTitle);
+							// ////console.log(nextTitle);
 							turn = true;
 						} else if (curIndex == 0 && turn) {
 							$("#nextBlog").html(nextTitle).attr("nextId",
@@ -376,7 +379,7 @@ function init_top3hot() {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			// console.log(data);
+			// ////console.log(data);
 			var top3HotTemplate = Handlebars.compile($("#top3HotTemplate")
 					.html());
 			$(".tophot3Area").html(top3HotTemplate(data));
@@ -396,9 +399,18 @@ function init_comment() {
 		type : 'get',
 		dataType : 'json',
 		success : function(data) {
-			//console.log(data);
+			//////console.log(data);
 			var commentTemplate = Handlebars.compile($("#commentTemplate").html());
 			$(".historyComment").html(commentTemplate(data));
 		}
 	});
+}
+
+function callBackCategory(){
+	$.each($(".categoryVBtn"),function(index,data){
+//		////console.log($(data).attr("cateGoryVid")+":"+curCategoryVId);
+		if($(data).attr("cateGoryVid")==curCategoryVId){
+			$(data).toggleClass("active");
+		}
+	})
 }

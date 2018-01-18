@@ -2,12 +2,15 @@ package com.neusoft.ssmpro.ztree;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+
 public class ZtreeVo implements Serializable{
 
 	private Integer id;
 	
 	private Integer pid;
-	
+	@NotBlank(message="博客分类名称不能为空")
 	private String name;
 	
 	private boolean open=true;

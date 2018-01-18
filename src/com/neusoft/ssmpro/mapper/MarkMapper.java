@@ -56,4 +56,8 @@ public interface MarkMapper {
 	boolean switchstatus(Mark mark);
 
 	void insertMarkBlog(@Param("markId")Integer id, @Param("blogId")Long blogId);
+
+	int deleteRelation(@Param("blogId")Integer blogId);
+
+	boolean editMark(Mark mark);
 }

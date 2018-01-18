@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>注册 - 千寻 - Thousands Find</title>
+<meta author="lvbinbin 吕彬彬">
+<link rel="stylesheet" type="text/css" href="style/register-login.css">
+<link rel="shortcut icon" href="../favicon.ico" />
+<style type="text/css">
+	.error_info{color:red;}
+	.errordiv_Info{border:1px solid red};
+</style>
+</head>
+<body>
+	<div id="box"></div>
+	<div class="cent-box register-box">
+		<div class="cent-box-header">
+			<h1 class="main-title hide">千寻</h1>
+			<h2 class="sub-title">生活热爱分享 - Thousands Find</h2>
+		</div>
+
+		<div class="cont-main clearfix">
+			<div class="index-tab">
+				<div class="index-slide-nav">
+					<a href="login.html">登录</a> <a href="register.html" class="active">注册</a>
+					<div class="slide-bar slide-bar1"></div>
+				</div>
+			</div>
+			<form action="#" id="registerForm">
+				<div class="login form" style="height:350px">
+					<div class="group">
+						<div class="group-ipt email">
+							<input type="email" name="userName" id="email" class="ipt"
+								placeholder="邮箱地址"/>
+							<span id="email_span" style="margin-left:30%;color: red;font-size: 15px；height:15px;"></span>	
+						</div>
+						
+						<div class="group-ipt user">
+							<input type="text" name="userRealname" id="user" class="ipt"
+								placeholder="真实姓名"/>
+								<span id="user_span" style="margin-left:23%;color: red;font-size: 15px；height:15px;"></span>
+						</div>
+						<div class="group-ipt password">
+							<input type="password" name="userPassword" id="password"
+								class="ipt" placeholder="设置登录密码">
+								<span id="password_span" style="margin-left:30%;color: red;font-size: 15px；height:15px;"></span>
+						</div>
+						<div class="group-ipt password1">
+							<input type="password" name="userPasswordAgain" id="password1"
+								class="ipt" placeholder="重复密码">
+								<span id="password1_span" style="margin-left:30%;color: red;font-size: 15px；height:15px;"></span>
+						</div>
+						<div class="group-ipt verify">
+							<input type="text" name="verify" id="verify" class="ipt"
+								placeholder="输入验证码"> <img
+								src="http://localhost/ssmBlog/kaptcha.jpg" class="imgcode">
+								<span id="verify_span"  style="margin-left:30%;color: red;font-size: 15px；height:15px;"></span>
+						</div>
+					</div>
+				</div>
+				<div class="group">
+					<span id="erroInfoArea"
+						style="display: inline-block; color: red; margin-left: 30%; font-size: 18px"></span>
+				</div>
+				<div class="button">
+					<input type="submit" id="button" class="register_btn" value="注册用户" />
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="regFooter">
+		<p>千寻 - Thousands Find</p>
+		<p>
+			&copy;水木木博客论坛</a> 2018
+		</p>
+	</div>
+
+	<script src='js/particles.js' type="text/javascript"></script>
+	<script src='js/background.js' type="text/javascript"></script>
+	<script src='js/jquery.min.js' type="text/javascript"></script>
+	<script src='../js/jquery.validate.min.js' type="text/javascript"></script>
+	<script src='../js/jquery.validate.extend.js' type="text/javascript"></script>
+	<script src='js/layer/layer.js' type="text/javascript"></script>
+	<script src='js/index.js' type="text/javascript"></script>
+	<script src='js/jQuery.form.js' type="text/javascript"></script>
+	<script src="../layui/layui.all.js"></script>
+	<script>
+		$('.imgcode').hover(function() {
+			layer.tips("看不清？点击更换", '.verify', {
+				time : 6000,
+				tips : [ 2, "#3c3c3c" ]
+			})
+		}, function() {
+			layer.closeAll('tips');
+		}).click(
+				function() {
+					$(this).attr(
+							'src',
+							'http://localhost/ssmBlog/kaptcha.jpg?'
+									+ Math.random());
+				});
+	
+			var i=0;	
+		$(function() {
+			init();
+			$("#button").click(function() {
+				$("#registerForm").validate({
+			        submitHandler : function(form) {  //验证通过后的执行方法
+			            //当前的form通过ajax方式提交（用到jQuery.Form文件）
+			            $(form).ajaxSubmit({
+			                dataType:"json",
+			                url:"http://localhost/ssmBlog/register",
+			                type : "POST",
+			                success:function(data){
+			                	if (data.code == 200) {
+									//window.location.href="http://localhost/ssmBlog/index.html";
+									layer.msg("注册成功");
+									setInterval("window.location.href='http://localhost/ssmBlog/index.html'",1000);
+								} else if (data.code == 100) {
+									$("#erroInfoArea").html(data.result.erroInfo);
+								}
+			                  }
+			                }); 
+
+			        },
+			        focusInvalid : true,   //验证提示时，鼠标光标指向提示的input
+			        rules : {  //验证尺度  
+			        	userRealname : {
+							required : true, //必填。如果验证方法不需要参数，则配置为true
+							rangelength : [ 3, 20 ]
+						},
+						userPassword : {
+							required : true,
+							rangelength : [ 6, 12 ]
+						},
+						userPasswordAgain : {
+							required : true,
+							equalTo : '#password' //表示和id="spass"的值相同
+						},
+						verify : {
+							required : true,
+						},
+						userName : {
+							required : true,
+							email : true,
+							remote: {          //远程ajax验证
+					                url: "http://localhost/ssmBlog/checkUserName", //检查是否存在账号，存在则返回true
+					                type: "POST",
+					                dataType: "json",
+					                data: {
+					                	userName: $("#userName").val()
+					                },
+					                dataFilter: function (data) {  //判断控制器返回的内容
+					                    var obj = eval("("+ data +")");
+					                   if(obj.result.result){
+					                        return true;
+					                    }else{
+					                        return false;
+					                    }
+					                }
+					            }
+						}
+			        },  
+			        messages : {  
+			        	userRealname:{
+	                        required:"请输入用户真实姓名",
+	                        rangelength:$.validator.format("用户名长度在必须为：{0}-{1}之间")
+	                    },
+	                    userPassword:{
+	                        required:"请输入密码",
+	                        rangelength:$.validator.format("字段长度必须为：{0}-{1}之间")
+	                    },
+	                    userPasswordAgain:{
+	                        required:"请再次输入密码",
+	                        equalTo:"两次密码必须一致" 
+	                    },
+	                    verify:{
+	                        required:"请输入验证码"
+	                    },
+	                    userName:{
+	                        required:"请输入邮箱地址",
+	                        email:"邮箱格式不正确",
+	                        remote:'邮箱已被注册,换个试试?'
+	                    }
+			        },  
+			        errorClass : "error_info",
+			        errorPlacement: function(error, element) { 
+			        	//error.appendTo( element.parent().next() );
+			        	/* layer.tips($(error).text(),element,{
+			        		time:2500
+			        	}); */
+			        	var errorId=$(error).attr("id").split("-")[0];
+			        	$("#"+errorId+"_span").html($(error).text());
+		        	}
+			      });
+			});
+		});
+
+		function init() {
+			$('#email').val("");
+			$('#user').val("");
+			$('#password').val("");
+			$('#password1').val("");
+			$('#verify').val("");
+		}
+	</script>
+</body>
+</html>

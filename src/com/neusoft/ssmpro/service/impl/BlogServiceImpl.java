@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
@@ -94,6 +95,16 @@ public class BlogServiceImpl implements BlogService{
 	@Override
 	public Blog loadBlogById(long blogId) {
 		return blogMapper.selectByPrimaryKey(Integer.parseInt(blogId+""));
+	}
+
+	@Override
+	public boolean editBlog(Blog blog) {
+		return blogMapper.editBlog(blog)>0?true:false;
+	}
+
+	@Override
+	public boolean addBlogDemo(Blog blog) {
+		return blogMapper.addBlogDemo(blog);
 	}
 
 

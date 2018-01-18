@@ -6917,10 +6917,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     '<html xmlns=\'http://www.w3.org/1999/xhtml\' class=\'view\' ><head>' +
                     '<style type=\'text/css\'>' +
                     //设置四周的留边
-                    '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
+                    '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;img:max-width:100%;}\n' +
                     //设置默认字体和字号
                     //font-family不能呢随便改，在safari下fillchar会有解析问题
                     'body{margin:8px;font-family:sans-serif;font-size:16px;}' +
+                    'img{max-width:100%;}'+
                     //设置段落间距
                     'p{margin:5px 0;}</style>' +
                     ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) +
@@ -24526,6 +24527,7 @@ UE.plugin.register('simpleupload', function (){
                             loader = me.document.getElementById(loadingId);
                             loader.setAttribute('src', link);
                             loader.setAttribute('_src', link);
+                            loader.setAttribute('style','max-width:250px');
                             loader.setAttribute('title', json.title || '');
                             loader.setAttribute('alt', json.original || '');
                             loader.removeAttribute('id');

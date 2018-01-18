@@ -20,18 +20,20 @@ import com.neusoft.ssmpro.entity.Blog;
 import com.neusoft.ssmpro.entity.CategoryV;
 import com.neusoft.ssmpro.entity.Global;
 import com.neusoft.ssmpro.entity.Mark;
+import com.neusoft.ssmpro.entity.tblUser;
 import com.neusoft.ssmpro.mapper.BlogMapper;
 import com.neusoft.ssmpro.mapper.CategoryNavMapper;
 import com.neusoft.ssmpro.mapper.CategoryVMapper;
 import com.neusoft.ssmpro.mapper.CommentContentMapper;
 import com.neusoft.ssmpro.mapper.GlobalMapper;
 import com.neusoft.ssmpro.mapper.MarkMapper;
+import com.neusoft.ssmpro.mapper.tblUserMapper;
 import com.neusoft.ssmpro.vo.BlogComment;
 import com.neusoft.ssmpro.vo.BlogVo;
 import com.neusoft.ssmpro.ztree.ZtreeVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring.xml","classpath:spring-solr.xml" })
+@ContextConfiguration(locations = { "classpath:spring.xml","classpath:spring-solr.xml","classpath:spring-shiro.xml" })
 public class TestDataSource {
 
 	@Autowired
@@ -176,5 +178,21 @@ public class TestDataSource {
 		
 		List<Integer> lists = categoryVMapper.loadFirstNavVIds();
 		System.out.println(lists);
+	}
+	
+	@Autowired
+	private tblUserMapper  userMapper;
+	
+	@Test
+	public void getUser() {
+		tblUser user = userMapper.selectByPrimaryKey(1);
+		System.out.println(user);
+	}
+	
+	
+	@Test
+	public void testCheckUser() {
+		int result = userMapper.checkByUserName("15850583289@163.com");
+		System.out.println(result);
 	}
 }

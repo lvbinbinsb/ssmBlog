@@ -14,6 +14,7 @@ import com.neusoft.ssmpro.entity.Blog;
 import com.neusoft.ssmpro.entity.CategoryNav;
 import com.neusoft.ssmpro.entity.CategoryV;
 import com.neusoft.ssmpro.entity.Mark;
+import com.neusoft.ssmpro.mapper.BlogMapper;
 import com.neusoft.ssmpro.service.BlogService;
 import com.neusoft.ssmpro.service.BlogSolrService;
 import com.neusoft.ssmpro.service.CategoryNavService;
@@ -78,4 +79,17 @@ public class UEditorBlogController {
 		return flag&&addMarkFlag;
 	}
 	
+	
+	@RequestMapping(value="/updateBlog",method=RequestMethod.POST)
+	public boolean updateBlog(Blog blog,@RequestParam("blogMarkId")List<Integer> markIds) {
+		boolean flag=blogService.editBlog(blog);
+		//更新博客与标签关系
+		boolean flag2=markService.removeAndAddRelation(blog.getBlogId(),markIds);
+		return flag&&flag2;
+	}
+	
+	@RequestMapping(value="/addBlogDemo",method= {RequestMethod.POST})
+	public boolean addBlogDemo(Blog blog) {
+		return blogService.addBlogDemo(blog);
+	}
 }

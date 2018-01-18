@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+ <link rel="stylesheet" href="layui/css/layui.css">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+  	.layui-input{border:1px solid #777;}
+  </style>
+</head>
+<body>
+
+	<h1 style="text-align:center;">添加blog数据</h1>
+	<form action="../addBlogDemo" method="post" style="width:900px;margin:10px auto;" id="addblogform">
+		<fieldset>
+			<legend>添加博客数据</legend>
+			<label for="blog_title">博客标题：</label><br>
+			<input type="text" name="blogTitle" id="blog_title" class="layui-input"><br><br>
+			<label for="blog_title">博客内容：</label><br>
+			<textarea id="blogContent" name="blogContent"></textarea><br><br>
+			<input type="submit" value="确认提交" class="button button-royal button-giant">
+		</fieldset>
+	</form>
+
+<script src="js/jQuery.min.js"></script>
+<script type="text/javascript" src="../utf8-jsp/ueditor.config.js"></script>
+<script type="text/javascript" src="../utf8-jsp/ueditor.all.min.js"></script>
+<script type="text/javascript" src="../utf8-jsp/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="js/jquery.form.min.js"></script>
+<script src="../layui/layui.all.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+});
+</script>
+<script type="text/javascript">
+	var ue = UE.getEditor("blogContent");  
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		 $("#addblogform").submit(function () {
+              $(this).ajaxSubmit(function (responseText) {
+                alert(responseText);
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                parent.layer.close(index);
+                parent.listblogsbypage(1);
+            }); 
+            return false;
+       });
+	});
+</script>
+</body>
+</html>
