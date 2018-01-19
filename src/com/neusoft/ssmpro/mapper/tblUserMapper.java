@@ -57,4 +57,9 @@ public interface tblUserMapper {
 	 * @return: boolean
 	 */
 	int checkByUserName(String userName);
+
+	
+	int checkOldPwd(tblUser user);
+	
+	int changePwd(tblUser user);
 }

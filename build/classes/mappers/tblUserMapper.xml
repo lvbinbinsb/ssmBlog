@@ -70,4 +70,12 @@
 	<select id="checkByUserName" resultType="int">
 		select count(user_id) from tbl_user where user_name=#{userName}
 	</select>
+	
+	<select id="checkOldPwd" resultType="int">
+		select count(user_id) from tbl_user where user_name=#{userName} and user_password=#{userPassword}
+	</select>
+	
+	<update id="changePwd">
+		update 	tbl_user set user_password=#{userPassword} where user_name=#{userName}
+	</update>
 </mapper>

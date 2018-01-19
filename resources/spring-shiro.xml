@@ -17,6 +17,11 @@
 
 	<bean id="myRealm" class="com.neusoft.ssmpro.shiro.MyRealm">
 		<property name="credentialsMatcher" ref="customCreidentialMatcher" />
+		<property name="cachingEnabled" value="true"/>
+		<property name="authenticationCachingEnabled" value="true"/>
+		<property name="authenticationCacheName" value="authenticationCache"/>
+		<property name="authorizationCachingEnabled" value="true"/>
+		<property name="authorizationCacheName" value="authorizationCache"/>
 	</bean>
 
 	<bean id="customCreidentialMatcher" class="com.neusoft.ssmpro.shiro.CustomCreidentialMatcher">
@@ -39,6 +44,7 @@
 		<!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截. -->
 		<property name="filterChainDefinitions">
 			<value>
+				/login/forgetPwd**=anon
 				/errorPage/**=anon
 				/css/**=anon
 				/img/**=anon
@@ -75,6 +81,8 @@
 				/admin/addPage.html=authc
 				/checkUserName=anon
 				/getCurUserName=authc
+				/checkOldPwd=anon
+				/changePwd=anon
 				/**=authc
 			</value>
 		</property>

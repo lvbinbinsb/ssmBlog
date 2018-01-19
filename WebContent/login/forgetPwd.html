@@ -28,29 +28,16 @@
 		<div class="login form">
 			<div class="group">
 				<div class="group-ipt email">
-					<input type="text" name="userName" id="email" class="ipt" placeholder="邮箱地址">
-				</div>
-				<div class="group-ipt password">
-					<input type="password" name="userPassword" id="password" class="ipt" placeholder="输入您的登录密码">
+					<input type="text" name="userName" id="email" class="ipt" placeholder="请输入您要找回邮箱地址">
 				</div>
 				<div class="group-ipt verify">
 					<input type="text" name="verify" id="verify" class="ipt" placeholder="输入验证码">
-					<img src="http://localhost/ssmBlog/kaptcha.jpg" class="imgcode">
+					<a id="button">发送验证码</a>
 				</div>
 			</div>
 		</div>
 		<div class="group">
 			<span id="erroInfoArea" style="display:inline-block;color:red;margin-left:10%;font-size:16px"></span>
-		</div>
-		<div class="button">
-			<input type="submit" id="button" class="login-btn" value="登录"/>
-		</div>
-		
-		<div class="remember clearfix">
-			<label class="remember-me"><span class="icon"><span class="zt"></span></span><input type="checkbox" name="remember_me" id="remember-me" value="1" class="remember-mecheck"/>记住我</label>
-			<label class="forgot-password">
-				<a href="forgetPwd.html">忘记密码？</a>
-			</label>
 		</div>
 		</form>
 	</div>

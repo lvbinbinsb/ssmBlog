@@ -40,4 +40,22 @@
 		eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="0"
 		overflowToDisk="false" statistics="false">
 	</cache>
+	
+	<!-- 半小时缓存授权信息 -->
+	<cache name="authorizationCache"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="0"
+           overflowToDisk="false">
+    </cache>
+	
+	<!-- 半小时缓存认证信息 -->
+    <cache name="authenticationCache"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="0"
+           overflowToDisk="false">
+    </cache>
 </ehcache>

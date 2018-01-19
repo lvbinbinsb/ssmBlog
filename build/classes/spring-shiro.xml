@@ -75,6 +75,8 @@
 				/admin/addPage.html=authc
 				/checkUserName=anon
 				/getCurUserName=authc
+				/checkOldPwd=anon
+				/changePwd=anon
 				/**=authc
 			</value>
 		</property>

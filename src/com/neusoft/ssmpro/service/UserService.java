@@ -18,4 +18,8 @@ public interface UserService {
 	 */
 	boolean checkUserName(String userName);
 
+	boolean checkOldPwd(tblUser user);
+	
+	boolean changePwd(tblUser user);
+
 }

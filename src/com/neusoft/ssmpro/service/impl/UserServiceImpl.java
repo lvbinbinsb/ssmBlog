@@ -32,6 +32,21 @@ public class UserServiceImpl implements UserService {
 	public boolean checkUserName(String userName) {
 		return userMapper.checkByUserName(userName)>0?false:true;
 	}
+
+
+	@Override
+	public boolean checkOldPwd(tblUser user) {
+		user.setUserPassword(passwordHash.toHex(user.getUserPassword(), user.getUserName()));
+		int result=userMapper.checkOldPwd(user);
+		return result>0?true:false;
+	}
+
+
+	@Override
+	public boolean changePwd(tblUser user) {
+		user.setUserPassword(passwordHash.toHex(user.getUserPassword(),user.getUserName() ));
+		return userMapper.changePwd(user)>0?true:false;
+	}
 	
 	
 }
