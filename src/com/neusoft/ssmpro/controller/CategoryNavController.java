@@ -3,6 +3,7 @@ package com.neusoft.ssmpro.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,21 +47,25 @@ public class CategoryNavController {
 	}
 	
 	@RequestMapping(value="/add")
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean add(CategoryNav categoryNav) {
 		return categoryNavService.addCateGoryNav(categoryNav);
 	}
 	
 	@RequestMapping(value="/switchstatus")
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean switchstatus(CategoryNav categoryNav) {
 		return categoryNavService.switchstatus(categoryNav);
 	}
 
 	@RequestMapping(value="/del/{categoryNavId}",method=RequestMethod.GET)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean delCategoryNav(@PathVariable("categoryNavId")Integer categoryNavId) {
 		return categoryNavService.deleteCategoryNav(categoryNavId);
 	}
 	
 	@RequestMapping(value="/editCategory",method=RequestMethod.POST)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean editCategory(CategoryNav categoryNav) {
 		return categoryNavService.editCategory(categoryNav);
 	}

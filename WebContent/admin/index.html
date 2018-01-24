@@ -6,17 +6,17 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- 该标签代表本页面所有的相对路径的请求 全部相对本路径发送请求 -->
-<base href="http://localhost/ssmBlog/admin/">
+<base href="http://localhost/ssmBlog/">
 <link rel="shortcut icon" href="favicon.ico">
 <title>博客站点后台管理</title>
-<link rel="stylesheet" href="layui/css/layui.css">
-<link href="css/buttons.min.css" rel="stylesheet">
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="css/admin.css">
-<link rel="stylesheet" href="ztree/zTreeStyle.css" type="text/css">
-<script type="text/javascript" src="js/jQuery.min.js"></script>
-<script type="text/javascript" src="js/jquery.ztree.all.min.js"></script>
-<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="admin/resources/layui/css/layui.css">
+<link href="admin/resources/css/buttons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="admin/resources/css/admin.css">
+<link rel="stylesheet" href="admin/resources/ztree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="admin/resources/js/jQuery.min.js"></script>
+<script type="text/javascript" src="admin/resources/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
 </head>
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
@@ -25,7 +25,7 @@
 			<!-- 头部区域（可配合layui已有的水平导航） -->
 			<ul class="layui-nav layui-layout-right">
 				<li class="layui-nav-item"><a href="javascript:;"> <img
-						src="img/RCzsdCq.jpg" class="layui-nav-img"><span
+						src="admin/resources/img/RCzsdCq.jpg" class="layui-nav-img"><span
 						id="userSpan"></span>
 				</a>
 					<dl class="layui-nav-child">
@@ -59,9 +59,9 @@
 				</ul>
 			</div>
 		</div>
-		<script type="text/javascript" src="../utf8-jsp/ueditor.config.js"></script>
-		<script type="text/javascript" src="../utf8-jsp/ueditor.all.js"></script>
-		<script type="text/javascript" src="../utf8-jsp/lang/zh-cn/zh-cn.js"></script>
+		<script type="text/javascript" src="resources/utf8-jsp/ueditor.config.js"></script>
+		<script type="text/javascript" src="resources/utf8-jsp/ueditor.all.js"></script>
+		<script type="text/javascript" src="resources/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
 		<div class="layui-body" style="width: 90%">
 			<div class="container" style="margin-top: 20px;">
 				<h1 style="height: 200px; line-height: 200px; text-align: center;">欢迎进入博客系统后台管理系统！</h1>
@@ -115,7 +115,7 @@
 			</form>
 		</script>
 		<script type="text/x-handlebars-template" id="categoryVTemplate">
-	<div class="categoryv_list" style="width:90%;">
+	<div class="categoryv_list" style="width:90%;height:500px;">
 			<div class="categoryv_list">
 			<h2>二级分类管理</h2>
 			<p style="text-indent:4em">
@@ -419,14 +419,14 @@
 	</script>
 
 
-	<script src="js/handlebars.min.js"></script>
-	<script src="js/jquery.form.min.js"></script>
-	<script src="layui/layui.all.js"></script>
-	<script src="js/admin.js"></script>
-	<script src="js/user.js"></script>
-	<script src="js/blogAdd.js"></script>
-	<script src="js/blog_1_0.js"></script>
-	<script src="js/admin-ztree.js"></script>
+	<script src="admin/resources/js/handlebars.min.js"></script>
+	<script src="admin/resources/js/jquery.form.min.js"></script>
+	<script src="admin/resources/layui/layui.all.js"></script>
+	<script src="admin/resources/js/admin.js"></script>
+	<script src="admin/resources/js/user.js"></script>
+	<script src="admin/resources/js/blogAdd.js"></script>
+	<script src="admin/resources/js/blog_1_0.js"></script>
+	<script src="admin/resources/js/admin-ztree.js"></script>
 	<script>
 		//JavaScript代码区域
 		layui.use('element', function() {

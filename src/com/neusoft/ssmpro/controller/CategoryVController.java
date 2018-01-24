@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -57,18 +58,21 @@ public class CategoryVController {
 	}
 	
 	@RequestMapping(value="/updateNode",method=RequestMethod.POST)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean  updateNode(ZtreeVo node) {
 //		System.out.println(node);
 		return categoryVService.updateNode(node);
 	}
 	
 	@RequestMapping(value="/deleteNode",method=RequestMethod.GET)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean  deleteNode(Integer id) {
 //		System.out.println(node);
 		return categoryVService.deleteNode(id);
 	}
 	
 	@RequestMapping(value="/addNode",method=RequestMethod.POST)
+	@RequiresRoles(value= {"superAdmin"})
 	public MSG  addNode(@Validated ZtreeVo newNode,BindingResult result) {
 		List<ObjectError> errors = result.getAllErrors();
 		Map<String,String> errorInfos=new HashMap<String,String>();
@@ -83,6 +87,7 @@ public class CategoryVController {
 	}
 	
 	@RequestMapping(value="/changeCategoryNav",method=RequestMethod.POST)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean  changeCategoryNav(ZtreeVo newNode) {
 		boolean flag=false;
 		try {

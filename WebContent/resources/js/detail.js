@@ -65,7 +65,28 @@ $(function() {
 						}
 					});
 	init_comment();
+	getCurUser();
 });
+
+function getCurUser(){
+	$.ajax({
+		type:'post',
+		url:path+'getCurUserName',
+		dataType:'json',
+		success:function(data){
+//			console.log(data);
+			if(data.code==200){
+				//$(".userInfoArea").css({"display":"none"});
+				$(".userInfoArea").html("");
+				$(".userInfoArea").append($("<span style='font-size:16px;color:blue;'></span>").html(data.result.curUserName));
+			}
+		},
+		error:function(){
+//			layer.msg("服务器繁忙  请稍后重试");
+		}
+	});
+}
+
 
 function init_blog(isBlogRead, isBlogPraise) {
 	var params = "";

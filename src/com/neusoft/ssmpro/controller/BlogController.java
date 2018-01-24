@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -121,6 +122,7 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value = "/switch/{blogId}", method = RequestMethod.POST)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean switchStatusById(@PathVariable("blogId")Long blogId,@RequestParam("status")String status) {
 		if(status!=null&&status.equals("1")) {
 			status="0";
@@ -137,6 +139,7 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/delete/{blogId}",method= RequestMethod.GET)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean deleteBlog(@PathVariable("blogId")Long blogId) {
 		boolean flag=blogService.deleteBlog(blogId);
 		return flag;

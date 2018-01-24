@@ -2,6 +2,7 @@ package com.neusoft.ssmpro.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,6 +70,7 @@ public class UEditorBlogController {
 	}
 	
 	@RequestMapping(value="/addBlog",method=RequestMethod.POST)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean addBlog(Blog blog,@RequestParam("blogMarkId")List<Integer> markIds) {
 //		System.out.println(markIds);
 		boolean flag=blogService.insertBlog(blog);
@@ -81,6 +83,7 @@ public class UEditorBlogController {
 	
 	
 	@RequestMapping(value="/updateBlog",method=RequestMethod.POST)
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean updateBlog(Blog blog,@RequestParam("blogMarkId")List<Integer> markIds) {
 		boolean flag=blogService.editBlog(blog);
 		//更新博客与标签关系
@@ -89,6 +92,7 @@ public class UEditorBlogController {
 	}
 	
 	@RequestMapping(value="/addBlogDemo",method= {RequestMethod.POST})
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean addBlogDemo(Blog blog) {
 		return blogService.addBlogDemo(blog);
 	}

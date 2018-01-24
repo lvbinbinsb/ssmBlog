@@ -8,24 +8,24 @@
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <title class="globalTitle"></title>
 <link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" href="css/detail.css">
+<link rel="stylesheet" href="resources/css/detail.css">
 <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
 	      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
-<link rel="stylesheet" href="css/default.min.css">
-<link rel="stylesheet" type="text/css" href="praise/Css/praise.css" />
-<link rel="stylesheet" type="text/css" href="css/reset-common.css" />
-<script type="text/javascript" src="syntaxhighlighter/scripts/shCore.js"></script>  
-<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushJScript.js"></script>  
-<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushJava.js"></script>  
-<link rel="stylesheet" type="text/css" href="syntaxhighlighter/styles/shCoreDefault.css">  
-<link rel="stylesheet" type="text/css" href="syntaxhighlighter/styles/shCore.css">
+<link rel="stylesheet" type="text/css" href="resources/layui/css/layui.css" />
+<link rel="stylesheet" href="resources/css/default.min.css">
+<link rel="stylesheet" type="text/css" href="resources/praise/Css/praise.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/reset-common.css" />
+<script type="text/javascript" src="resources/syntaxhighlighter/scripts/shCore.js"></script>  
+<script type="text/javascript" src="resources/syntaxhighlighter/scripts/shBrushJScript.js"></script>  
+<script type="text/javascript" src="resources/syntaxhighlighter/scripts/shBrushJava.js"></script>  
+<link rel="stylesheet" type="text/css" href="resources/syntaxhighlighter/styles/shCoreDefault.css">  
+<link rel="stylesheet" type="text/css" href="resources/syntaxhighlighter/styles/shCore.css">
 <script type="text/javascript">
      SyntaxHighlighter.all();
 </script>
@@ -41,9 +41,15 @@
 	<div class="lg_page">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-9">
+				<div class="col-lg-7">
 					<div class="page-header">
 						<h1 class="lg_header_h1 globalTitle2"></h1>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="input-group userInfoArea" style="margin:20px;">
+						<a class="btn btn-default" href="login/login.html">登录</a>
+						<a class="btn btn-default" href="login/register.html">注册</a>
 					</div>
 				</div>
 				<!-- /.col-lg-6 -->
@@ -100,7 +106,7 @@
 								class="label label-warning" id="praiseSpan">{{blogPraise}}</span></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<span class="praise"
 								style="display: inline-block; float: right; margin: 0px 0px;">
-								<span id="praise"><img src="praise/Images/zan.png" id="praise-img" /></span><span id="praise-txt">{{blogPraise}}</span><span
+								<span id="praise"><img src="resources/praise/Images/zan.png" id="praise-img" /></span><span id="praise-txt">{{blogPraise}}</span><span
 								id="add-num"><em>+1</em></span>
 							</span>
 						</script>
@@ -182,7 +188,7 @@
 						};
 						with (document)
 							0[(getElementsByTagName('head')[0] || body)
-									.appendChild(createElement('script')).src = 'js/share.js?v=89860593.js?cdnversion='
+									.appendChild(createElement('script')).src = 'resources/js/share.js?v=89860593.js?cdnversion='
 									+ ~(-new Date() / 36e5)];
 					</script>
 				</div>
@@ -195,21 +201,21 @@
 						<div class="row">
 							<div class="col-lg-3">
 								<a href="#" class="thumbnail"> <img
-									src="img/weixin-logo.jpg" alt="加【某某某】微信">
+									src="resources/img/weixin-logo.jpg" alt="加【某某某】微信">
 								</a>
 							</div>
 							<div class="col-lg-3">
-								<a href="#" class="thumbnail"> <img src="img/phone-logo.png"
+								<a href="#" class="thumbnail"> <img src="resources/img/phone-logo.png"
 									alt="给【某某某】打电话">
 								</a>
 							</div>
 							<div class="col-lg-3">
 								<a href="mailto:55491111@qq.com" class="thumbnail"> <img
-									src="img/emial-logo.jpg" alt="发邮件给【某某某】">
+									src="resources/img/emial-logo.jpg" alt="发邮件给【某某某】">
 								</a>
 							</div>
 							<div class="col-lg-3">
-								<a href="#" class="thumbnail"> <img src="img/tim-logo.jpg"
+								<a href="#" class="thumbnail"> <img src="resources/img/tim-logo.jpg"
 									alt="TIM联络【某某某】">
 								</a>
 							</div>
@@ -224,7 +230,7 @@
 							<li class="list-group-item">
 								<div class="row">
 									<div class="col-lg-3">
-										<img src="img/2.jpg" alt="..."
+										<img src="resources/img/2.jpg" alt="..."
 											class="img-responsive center-block">
 									</div>
 									<div class="col-lg-9">
@@ -259,7 +265,7 @@
 						<div class="media">
 							<div class="media-left">
 								<a href="#"> <img class="media-object thumbnail"
-									data-src="holder.js/64x64" alt="64x64" src="img/tim-logo.jpg"
+									data-src="holder.js/64x64" alt="64x64" src="resources/img/tim-logo.jpg"
 									data-holder-rendered="true" style="width: 64px; height: 64px;">
 								</a>
 							</div>
@@ -287,7 +293,7 @@
 							<div class="media-right">
 								<a href="#"> <img class="media-object thumbnail"
 									data-src="holder.js/64x64" alt="64x64"
-									src="img/weixin-logo.jpg" data-holder-rendered="true"
+									src="resources/img/weixin-logo.jpg" data-holder-rendered="true"
 									style="width: 64px; height: 64px;">
 								</a>
 							</div>
@@ -324,15 +330,15 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<!--<script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>-->
-	<script src="js/jQuery.min.js"></script>
-	<script src="js/jquery.cookie.js" type="text/javascript"></script>
-	<script src="js/highlight.min.js"></script>
+	<script src="resources/js/jQuery.min.js"></script>
+	<script src="resources/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="resources/js/highlight.min.js"></script>
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-	<script src="js/bootstrap.min.js"></script>
-	<script src="layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="js/handlebars.js"></script>
-	<script type="text/javascript" src="js/detail.js"></script>
-	<script type="text/javascript" src="js/cookie.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="resources/js/handlebars.js"></script>
+	<script type="text/javascript" src="resources/js/detail.js"></script>
+	<script type="text/javascript" src="resources/js/cookie.js"></script>
 
 
 

@@ -4,8 +4,9 @@
 	<meta charset="utf-8">
 	<meta author="lvbinbin 吕彬彬">
 	<title>登录 - 千寻 - Thousands Find</title>
-	<link rel="stylesheet" type="text/css" href="style/register-login.css">
-	<link rel="shortcut icon" href="../favicon.ico" />
+	<base href="http://localhost/ssmBlog/">
+	<link rel="stylesheet" type="text/css" href="login/resources/style/register-login.css">
+	<link rel="shortcut icon" href="resources/favicon.ico" />
 </head>
 <body>
 <div id="box"></div>
@@ -19,12 +20,12 @@
 	
 		<div class="index-tab">
 			<div class="index-slide-nav">
-				<a href="login.html" class="active">登录</a>
-				<a href="register.html">注册</a>
+				<a href="login/login.html" class="active">登录</a>
+				<a href="login/register.html">注册</a>
 				<div class="slide-bar"></div>				
 			</div>
 		</div>
-		<form id="loginForm" action="../login" method="post">
+		<form id="loginForm" method="post">
 		<div class="login form">
 			<div class="group">
 				<div class="group-ipt email">
@@ -60,14 +61,14 @@
 	<p>千寻 - Thousands Find</p>
 	<p>&copy;水木木博客论坛</a> 2018</p>
 </div>
-<link rel="stylesheet" href="../layui/css/layui.css">	
-<script src='js/particles.js' type="text/javascript"></script>
-<script src='js/background.js' type="text/javascript"></script>
-<script src='js/jquery.min.js' type="text/javascript"></script>
-<script src='js/jQuery.form.js' type="text/javascript"></script>
-<script src="../layui/layui.all.js"></script>
-<script src='js/layer/layer.js' type="text/javascript"></script>
-<script src='js/index.js' type="text/javascript"></script>
+<link rel="stylesheet" href="resources/layui/css/layui.css">	
+<script src='login/resources/js/particles.js' type="text/javascript"></script>
+<script src='login/resources/js/background.js' type="text/javascript"></script>
+<script src='login/resources/js/jquery.min.js' type="text/javascript"></script>
+<script src='login/resources/js/jQuery.form.js' type="text/javascript"></script>
+<script src="resources/layui/layui.all.js"></script>
+<script src='login/resources/js/layer/layer.js' type="text/javascript"></script>
+<script src='login/resources/js/index.js' type="text/javascript"></script>
 <script>
 	$("#email").val("");
 	$("#verify").val("");
@@ -94,6 +95,7 @@
 	var options = {
 			type : "POST",//请求方式：get或post
 			dataType : "json",//服务端返回数据类型：xml、json、script , 默认 null
+			url:'login',
 			beforeSubmit : function() {
 				//if($("#txt1").val()==""){return false;}//如：验证表单数据是否为空 前端校验
 			},

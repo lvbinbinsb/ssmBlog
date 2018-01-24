@@ -8,7 +8,7 @@
 		<property name="usernameParam" value="userName"/> <property name="passwordParam" 
 		value="userPassword"/> </bean> -->
 	<!-- ShiroSpringCache -->
-	
+
 
 	<bean id="passwordHash" class="com.neusoft.ssmpro.shiro.PasswordHash">
 		<property name="algorithmName" value="MD5" />
@@ -17,15 +17,15 @@
 
 	<bean id="myRealm" class="com.neusoft.ssmpro.shiro.MyRealm">
 		<property name="credentialsMatcher" ref="customCreidentialMatcher" />
-		<property name="cachingEnabled" value="true"/>
-		<property name="authenticationCachingEnabled" value="true"/>
-		<property name="authenticationCacheName" value="authenticationCache"/>
-		<property name="authorizationCachingEnabled" value="true"/>
-		<property name="authorizationCacheName" value="authorizationCache"/>
+		<property name="cachingEnabled" value="true" />
+		<property name="authenticationCachingEnabled" value="true" />
+		<property name="authenticationCacheName" value="authenticationCache" />
+		<property name="authorizationCachingEnabled" value="true" />
+		<property name="authorizationCacheName" value="authorizationCache" />
 	</bean>
 
 	<bean id="customCreidentialMatcher" class="com.neusoft.ssmpro.shiro.CustomCreidentialMatcher">
-		<constructor-arg index="0" ref="cacheManager"/>
+		<constructor-arg index="0" ref="cacheManager" />
 		<property name="passwordHash" ref="passwordHash"></property>
 	</bean>
 
@@ -39,28 +39,19 @@
 		<property name="loginUrl" value="/login/login.html" />
 		<!-- 登陆成功后的一面 -->
 		<property name="successUrl" value="/admin/index.html" />
-		<!--  没有权限的页面-->
+		<!-- 没有权限的页面 -->
 		<!-- <property name="unauthorizedUrl" value="/errorPage/401/401.html"/> -->
 		<!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截. -->
 		<property name="filterChainDefinitions">
 			<value>
+				/resources/**=anon
+				/=anon
+				/search/**=anon
 				/login/forgetPwd**=anon
 				/errorPage/**=anon
-				/css/**=anon
-				/img/**=anon
-				/js/**=anon
-				/layui/**=anon
-				/utf8-jsp/**=anon
-				/praise/**=anon
-				/syntaxhighlighter/**=anon
-				/admin/css/**=anon
-				/admin/js/**=anon
-				/admin/img/**=anon
-				/admin/layui/**=anon
-				/admin/ztree/**=anon
-				/login/images/**=anon
-				/login/js/**=anon
-				/login/style/**=anon
+				/resources/**=anon
+				/admin/resources/**=anon
+				/login/resources/**=anon
 				/index.html=anon
 				/login=anon
 				/register=anon
@@ -71,6 +62,8 @@
 				/login/register.html=anon
 				/kaptcha.jpg=anon
 				/global/update=authc
+				/categoryNav/list=anon
+				/categoryNav/listByMap=anon
 				/global/**=anon
 				/categoryV/*Node=authc
 				/categoryV/**=anon
@@ -80,20 +73,20 @@
 				/admin/index.html=authc
 				/admin/addPage.html=authc
 				/checkUserName=anon
-				/getCurUserName=authc
+				/getCurUserName=anon
 				/checkOldPwd=anon
 				/changePwd=anon
 				/**=authc
 			</value>
 		</property>
 	</bean>
-	
-<!-- <property name="cacheManager" ref="shiroSpringCacheManager"/> -->
+
+	<!-- <property name="cacheManager" ref="shiroSpringCacheManager"/> -->
 
 	<!-- 配置 Shiro 的 SecurityManager Bean. -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="myRealm" />
-		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 
 	<!-- Ehcache -->

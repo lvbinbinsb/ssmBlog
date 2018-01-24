@@ -11,6 +11,7 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
+	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value=".jsp"/>
@@ -40,4 +41,8 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
+    
+    <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
+    <mvc:resources location="/admin/resources/" mapping="/admin/resources/**"/>
+    <mvc:resources location="/login/resources/" mapping="/login/resources/**"/>
 </beans>

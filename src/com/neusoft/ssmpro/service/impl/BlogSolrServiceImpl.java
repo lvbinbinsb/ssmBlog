@@ -29,16 +29,19 @@ public class BlogSolrServiceImpl implements BlogSolrService {
 	public void loadBlogSolrByPage(String keyWord, Integer pn, Integer pageSize, PageInfo<Blog> pageInfo) {
 		pageInfo.setPageNum(pn);
 		pageInfo.setPageSize(pageSize);
-
 		// solrJ查询
 		SolrQuery query = new SolrQuery();
 		// 3、设置查询条件
-		query.set("q", "blog_title:"+keyWord, "blog_content:spring"+keyWord);// 设置查询关键字
+		StringBuffer sb=new StringBuffer();
+		sb.append("blog_title:").append(keyWord).append(" OR blog_content:").append(keyWord).append(" OR blog_title:")
+		.append("*").append(keyWord).append("*").append(" OR blog_content:").append("*").append(keyWord).append("*");
+//		query.set("q", "blog_title:"+keyWord ,"blog_content:"+keyWord);// 设置查询关键字
+		query.setQuery(sb.toString());
 		query.setSort("blog_id", ORDER.desc);// 按照id降序排列
 		int start=(pn-1)*pageSize;
 		query.setStart(start);
 		query.setRows(pageSize);// 分页条件
-		query.set("df", "blog_title");
+//		query.set("df", "blog_title");
 		// 开启高亮显示
 		query.setHighlight(true);
 		query.addHighlightField("blog_content");
@@ -56,17 +59,21 @@ public class BlogSolrServiceImpl implements BlogSolrService {
 			pageInfo.setSize(list.size());
 			for (Blog blog : list) {
 				Map<String, List<String>> map = hiMap.get(blog.getBlogId().toString());
-				System.out.println(blog.getBlogId());
-				blog.setBlogTitle(map.get("blog_title").get(0));
-				blog.setBlogContent(map.get("blog_content").get(0));
+//				System.out.println(blog.getBlogId());
+				if(map.get("blog_title")!=null) {
+					blog.setBlogTitle(map.get("blog_title").get(0));
+				}
+				if(map.get("blog_content")!=null) {
+					blog.setBlogContent(map.get("blog_content").get(0));
+				}
 			}
 			pageInfo.setList(list);
 			setPageInfo(pageInfo);
 		} catch (SolrServerException e) {
-			System.err.println(e.getMessage());
+//			System.err.println(e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+//			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

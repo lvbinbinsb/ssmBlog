@@ -2,6 +2,7 @@ package com.neusoft.ssmpro.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,21 +39,25 @@ public class MarkController {
 	}
 	
 	@RequestMapping(value="/add")
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean addMark(Mark mark) {
 		return markService.addMark(mark);
 	}
 	
 	@RequestMapping(value="/delete")
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean deleteMark(@RequestParam("markId")Integer markId) {
 		return markService.deleteMark(markId);
 	}
 	
 	@RequestMapping(value="/switchstatus")
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean switchstatus(Mark mark) {
 		return markService.switchstatus(mark);
 	}
 	
 	@RequestMapping(value="/edit")
+	@RequiresRoles(value= {"superAdmin"})
 	public boolean editMark(Mark mark) {
 		return markService.editMark(mark);
 	}

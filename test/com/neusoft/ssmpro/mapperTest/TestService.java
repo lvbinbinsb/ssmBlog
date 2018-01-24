@@ -22,6 +22,7 @@ import com.neusoft.ssmpro.service.CategoryVService;
 import com.neusoft.ssmpro.service.RoleService;
 import com.neusoft.ssmpro.service.UserService;
 import com.neusoft.ssmpro.shiro.MyRealm;
+import com.neusoft.ssmpro.shiro.PasswordHash;
 import com.neusoft.ssmpro.vo.BlogVo;
 import com.neusoft.ssmpro.ztree.ZtreeVo;
 
@@ -42,6 +43,16 @@ public class TestService {
 	
 	@Autowired
 	private CategoryVService CategoryVService;
+	
+	@Test
+	public void testSolr() {
+		PageInfo<Blog> info = new PageInfo<Blog>();
+		solrService.loadBlogSolrByPage("java", 1, 50, info);
+		info.getList().forEach((b)->{System.out.println("ID:"+b.getBlogId()+",Title:"+b.getBlogTitle());});
+		System.out.println("返回结果集大小:"+info.getList().size());
+	}
+	
+	
 	
 	@Test
 	public void testWithOutCache() {
@@ -114,6 +125,8 @@ public class TestService {
 	@Autowired
 	private RoleService roleService;
 	
+	@Autowired
+	private PasswordHash passwordHash;
 	@Test
 	public void test002() {
 		Set<String> set = roleService.getRoleSet("1021167471@qq.com");
